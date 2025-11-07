@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  firstname   String
+  lastname    String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  wallet       Wallet?
+  reservations Reservation[]
+
+  @@map("customers")
+}
+
+model Wallet {
+  id         String   @id @default(uuid())
+  balance    Decimal  @default(0) @db.Decimal(10, 2)
+  customerId String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@map("wallets")
+}
+
+model Hotel {
+  id          String   @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  country     String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rooms Room[]
+
+  @@map("hotels")
+}
+
+enum RoomType {
+  STANDARD
+  DELUXE
+  SUITE
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  number      String
+  type        RoomType
+  pricePerDay Decimal  @db.Decimal(10, 2)
+  capacity    Int
+  description String?
+  hotelId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  hotel        Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+
+  @@unique([hotelId, number])
+  @@map("rooms")
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Reservation {
+  id         String            @id @default(uuid())
+  customerId String
+  roomId     String
+  checkIn    DateTime
+  checkOut   DateTime
+  totalPrice Decimal           @db.Decimal(10, 2)
+  status     ReservationStatus @default(PENDING)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  room     Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("reservations")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  firstname String
+  lastname  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}

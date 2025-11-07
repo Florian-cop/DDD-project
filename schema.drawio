@@ -1,0 +1,208 @@
+<mxfile host="65bd71144e">
+    <diagram id="zZjjw1lCnE7HTwsz6aYY" name="Page-1">
+        <mxGraphModel dx="5800" dy="4075" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="7" value="Validated inputs" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-460" y="-1180" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Filled wallet" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-330" y="-1690" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="WALLET" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="-550" y="-1760" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Payment processed" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-450" y="-1690" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Fill waller for a Customer&lt;/span&gt;" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="-700" y="-1810" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="-770" y="-2010" width="630" height="520" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="Fill Wallet processing" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-440" y="-1840" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="Created account" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="-600" y="-1180" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="USER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="-670" y="-1260" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="Inputs validators" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-330" y="-1180" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Générated customer ID" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-460" y="-1060" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="account created" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-600" y="-1060" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Customer ID returned" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-720" y="-1060" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="Checked customer ID" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-590" y="-1690" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="Asked customer ID" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="-700" y="-1690" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=100;exitDy=60;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="64" target="63">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Mail with customer ID" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="-760" y="-980" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="Create account process" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-500" y="-1290" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="Displayed type of room" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="255" y="-380" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="Customer want to see Room" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="115" y="-380" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="Show Type of Room" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="-490" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="55" y="-460" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="ROOM" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="-35" y="-440" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="Create reservation process" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="-1280" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="-1260" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="ROOM" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="-10" y="-1210" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="WALLET" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="-1180" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="Customer create a reservation" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="-1230" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="Seleted Informations" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="331" y="-1230" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="Created reservations" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="-1110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="Checked available room" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="-1230" width="90" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="debited wallet" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="331" y="-1110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="Confirm reservation process" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="-750" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="720" y="-730" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="WALLET" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="-650" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="Customer confirm reservations" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="-700" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="Confirmed reservations" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="1120" y="-700" width="90" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="debited wallet" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="-700" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="RESERVATIONS" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="720" y="-690" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="RESERVATIONS" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="-1100" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="-870" y="-1390" width="730" height="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="-510" y="-1810" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="-620" width="515" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="152" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="123" target="151">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="123" target="122">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="-1400" width="720" height="580" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="124" target="123">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="-900" width="630" height="470" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="Checkout" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="-1570" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" value="ROOM" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="870" y="-1520" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="Customer checkout" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="-1460" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="Updated Room available" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="1130" y="-1460" width="90" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="-1660" width="500" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="144" value="Debited Wallet" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="405" y="-1770" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="WALLET" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="285" y="-1840" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="146" value="Checked amount" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="255" y="-1770" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" value="Debite Wallet" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="135" y="-1890" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="Debite Wallet processing" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=18;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="395" y="-1940" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" value="Checked customer ID" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="135" y="-1770" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="150" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="325" y="-1890" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="151" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;fillOpacity=0;" vertex="1" parent="1">
+                    <mxGeometry x="-5" y="-2020" width="700" height="470" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="CUSTOMER" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="870" y="-1450" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" value="&lt;span style=&quot;font-size: 50px;&quot;&gt;LEGENDS&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="1390" y="-2140" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="161" value="EVENTS" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="1460" y="-2030" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="163" value="ACTOR" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="1270" y="-2010" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="164" value="ACTION" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1630" y="-2030" width="100" height="100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

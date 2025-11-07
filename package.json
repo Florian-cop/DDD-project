@@ -1,0 +1,46 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Terme utiliser en Ubiquitous language\r Un User est une personne qui est présent sur la plateforme sans être connecté\r Un Customer est un User qui a créer un compte et qui peut faire des réservations\r Un Admin est un Customer qui a des droits supplémentaires pour gérer la plateforme\r Un Wallet est un porte-monnaie virtuel lié à un Customer\r Une Room est une chambre d'hôtel\r Une Reservation est une réservation faite par un Customer pour une ou plusieurs Room\r Un Type de Room est une catégorie de chambre d'hôtel (standard room, deluxe room, suite)",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:reset": "prisma migrate reset",
+    "db:studio": "prisma studio",
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:check": "ts-node src/scripts/check-database.ts"
+  },
+  "_moduleAliases": {
+    "@core": "./src/core",
+    "@config": "./src/config",
+    "@constants": "./src/constants",
+    "@domain": "./src/domain",
+    "@application": "./src/application",
+    "@infrastructure": "./src/infrastructure",
+    "@interfaces": "./src/interfaces"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "@types/uuid": "^8.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "shallow-equal-object": "^1.1.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.0",
+    "prisma": "^6.19.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

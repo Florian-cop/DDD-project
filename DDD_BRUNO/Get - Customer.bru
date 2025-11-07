@@ -1,0 +1,15 @@
+meta {
+  name: Get - Customer
+  type: http
+  seq: 1
+}
+
+get {
+  url: localhost:3000:3000⁠/api/customers
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
