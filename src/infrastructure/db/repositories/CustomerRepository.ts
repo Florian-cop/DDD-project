@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ICustomerRepository } from '../../../domain/customer/ICustomerRepository';
-import { Customer } from '../../../domain/customer/Customer';
+import { ICustomerRepository, Customer, Email } from '../../../domain/customer';
 
 export class CustomerRepository implements ICustomerRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -68,5 +67,23 @@ export class CustomerRepository implements ICustomerRepository {
     await this.prisma.customer.delete({
       where: { id }
     });
+  }
+
+  async findByEmail(email: Email): Promise<Customer | null> {
+    const customer = await this.prisma.customer.findUnique({
+      where: { email: email.value }
+    });
+
+    if (!customer) {
+      return null;
+    }
+
+    return Customer.create(
+      customer.email,
+      customer.firstname,
+      customer.lastname,
+      customer.phoneNumber,
+      customer.id
+    );
   }
 }

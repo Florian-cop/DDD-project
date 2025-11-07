@@ -1,5 +1,11 @@
-export { Customer, ICustomerProps } from './Customer';
-export { Email } from './Email';
-export { PhoneNumber } from './PhoneNumber';
-export { PersonName } from './PersonName';
-export { ICustomerRepository } from './ICustomerRepository';
+// Entities
+export { Customer, ICustomerProps } from './entities/Customer';
+
+// Value Objects
+export { Email } from './value-objects/Email';
+export { PhoneNumber } from './value-objects/PhoneNumber';
+export { PersonName } from './value-objects/PersonName';
+
+// Repositories
+export { ICustomerRepository } from './repositories/ICustomerRepository';
+

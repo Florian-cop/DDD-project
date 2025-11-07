@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CreateCustomerService } from '../../../../application/customer/create/CreateCustomerService';
 import { CreateCustomerCommand } from '../../../../application/customer/create/CreateCustomerCommand';
-import { Customer } from '../../../../domain/customer/Customer';
+import { Customer } from '../../../../domain/customer';
 import { CreateCustomerDTO, CustomerResponseDTO } from '../../dtos/CustomerDTO';
 
 export class CreateCustomerController {

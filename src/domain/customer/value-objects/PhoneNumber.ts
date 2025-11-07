@@ -1,4 +1,4 @@
-import { ValueObject } from '../../core/ValueObject';
+import { ValueObject } from '../../../core/ValueObject';
 
 interface IPhoneNumberProps {
   value: string;

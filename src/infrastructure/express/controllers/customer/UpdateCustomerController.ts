@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UpdateCustomerService } from '../../../../application/customer/update/UpdateCustomerService';
 import { UpdateCustomerCommand } from '../../../../application/customer/update/UpdateCustomerCommand';
-import { Customer } from '../../../../domain/customer/Customer';
+import { Customer } from '../../../../domain/customer';
 import { UpdateCustomerDTO, CustomerResponseDTO } from '../../dtos/CustomerDTO';
 
 export class UpdateCustomerController {

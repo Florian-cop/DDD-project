@@ -1,5 +1,4 @@
-import { ICustomerRepository } from '../../../domain/customer/ICustomerRepository';
-import { Customer } from '../../../domain/customer/Customer';
+import { ICustomerRepository, Customer } from '../../../domain/customer';
 
 export class GetAllCustomersService {
   constructor(private readonly customerRepository: ICustomerRepository) {}

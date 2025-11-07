@@ -1,8 +1,10 @@
-import { ICustomerRepository } from '../../../domain/customer/ICustomerRepository';
-import { Customer } from '../../../domain/customer/Customer';
-import { Email } from '../../../domain/customer/Email';
-import { PersonName } from '../../../domain/customer/PersonName';
-import { PhoneNumber } from '../../../domain/customer/PhoneNumber';
+import { 
+  ICustomerRepository, 
+  Customer, 
+  Email, 
+  PersonName, 
+  PhoneNumber 
+} from '../../../domain/customer';
 import { UpdateCustomerCommand } from './UpdateCustomerCommand';
 
 export class UpdateCustomerService {
@@ -15,41 +17,37 @@ export class UpdateCustomerService {
       throw new Error(`Customer with id "${command.id}" not found`);
     }
 
+    // Vérification de l'unicité de l'email si modifié
     if (command.email && command.email !== existingCustomer.email.value) {
-      const allCustomers = await this.customerRepository.findAll();
-      const emailExists = allCustomers.some(
-        (customer) => 
-          customer.id !== command.id && 
-          customer.email.value.toLowerCase() === command.email!.toLowerCase()
-      );
-
-      if (emailExists) {
+      const emailVO = Email.create(command.email);
+      const customerWithEmail = await this.customerRepository.findByEmail(emailVO);
+      
+      if (customerWithEmail && customerWithEmail.id !== command.id) {
         throw new Error(`Email "${command.email}" is already used by another customer`);
       }
     }
 
-   const email = command.email 
+    // Créer les Value Objects si les champs sont fournis
+    const email = command.email 
       ? Email.create(command.email) 
-      : existingCustomer.email;
+      : undefined;
 
     const name = (command.firstname || command.lastname)
       ? PersonName.create(
           command.firstname || existingCustomer.firstname,
           command.lastname || existingCustomer.lastname
         )
-      : existingCustomer.name;
+      : undefined;
 
     const phoneNumber = command.phoneNumber
       ? PhoneNumber.create(command.phoneNumber)
-      : existingCustomer.phoneNumber;
+      : undefined;
 
-     const updatedCustomer = Customer.fromValueObjects(
-      { email, name, phoneNumber },
-      existingCustomer.id
-    );
+    // Utiliser la méthode de mutation au lieu de recréer l'entité
+    existingCustomer.updateContactInfo(email, name, phoneNumber);
 
-    await this.customerRepository.save(updatedCustomer);
+    await this.customerRepository.save(existingCustomer);
 
-    return updatedCustomer;
+    return existingCustomer;
   }
 }

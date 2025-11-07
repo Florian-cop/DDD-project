@@ -1,7 +1,7 @@
-import { Entity } from '../../core/Entity';
-import { Email } from './Email';
-import { PhoneNumber } from './PhoneNumber';
-import { PersonName } from './PersonName';
+import { Entity } from '../../../core/Entity';
+import { Email } from '../value-objects/Email';
+import { PhoneNumber } from '../value-objects/PhoneNumber';
+import { PersonName } from '../value-objects/PersonName';
 
 export interface ICustomerProps {
   email: Email;
@@ -43,6 +43,28 @@ export class Customer extends Entity<ICustomerProps> {
 
   get fullname(): string {
     return this._name.fullname;
+  }
+
+  public changeEmail(email: Email): void {
+    this._email = email;
+  }
+
+  public changeName(name: PersonName): void {
+    this._name = name;
+  }
+
+  public changePhoneNumber(phoneNumber: PhoneNumber): void {
+    this._phoneNumber = phoneNumber;
+  }
+
+  public updateContactInfo(
+    email?: Email,
+    name?: PersonName,
+    phoneNumber?: PhoneNumber
+  ): void {
+    if (email) this._email = email;
+    if (name) this._name = name;
+    if (phoneNumber) this._phoneNumber = phoneNumber;
   }
 
   public static create(

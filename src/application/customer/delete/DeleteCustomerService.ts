@@ -1,4 +1,4 @@
-import { ICustomerRepository } from '../../../domain/customer/ICustomerRepository';
+import { ICustomerRepository } from '../../../domain/customer';
 import { DeleteCustomerCommand } from './DeleteCustomerCommand';
 
 export class DeleteCustomerService {

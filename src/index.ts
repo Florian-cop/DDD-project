@@ -1,9 +1,12 @@
 
-export { Customer, ICustomerProps } from './domain/customer/Customer';
-export { Email } from './domain/customer/Email';
-export { PersonName } from './domain/customer/PersonName';
-export { PhoneNumber } from './domain/customer/PhoneNumber';
-export { ICustomerRepository } from './domain/customer/ICustomerRepository';
+export { 
+  Customer, 
+  ICustomerProps, 
+  Email, 
+  PersonName, 
+  PhoneNumber, 
+  ICustomerRepository
+} from './domain/customer';
 
 export { CreateCustomerCommand } from './application/customer/create/CreateCustomerCommand';
 export { CreateCustomerService } from './application/customer/create/CreateCustomerService';
