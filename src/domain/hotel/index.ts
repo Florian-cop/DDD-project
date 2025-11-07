@@ -9,13 +9,3 @@ export { StarRating } from './value-objects/StarRating';
 
 // Repositories
 export { IHotelRepository } from './repositories/IHotelRepository';
-
-// Events
-export { HotelCreated } from './events/HotelCreated';
-export { RoomAddedToHotel } from './events/RoomAddedToHotel';
-export { RoomRemovedFromHotel } from './events/RoomRemovedFromHotel';
-export { AdminAddedToHotel } from './events/AdminAddedToHotel';
-export { AdminRemovedFromHotel } from './events/AdminRemovedFromHotel';
-export { HotelCapacityIncreased } from './events/HotelCapacityIncreased';
-export { HotelActivated } from './events/HotelActivated';
-export { HotelDeactivated } from './events/HotelDeactivated';
