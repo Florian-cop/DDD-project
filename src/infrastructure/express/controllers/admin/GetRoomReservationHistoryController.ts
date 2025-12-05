@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { GetRoomReservationHistoryService } from '../../../../application/admin/GetRoomReservationHistoryService';
-import { GetRoomReservationHistoryQuery } from '../../../../application/admin/GetRoomReservationHistoryQuery';
+import { GetRoomReservationHistoryService } from '../../../../application/statistics/GetRoomReservationHistoryService';
+import { GetRoomReservationHistoryQuery } from '../../../../application/statistics/GetRoomReservationHistoryQuery';
 
 export class GetRoomReservationHistoryController {
   constructor(private readonly getRoomReservationHistoryService: GetRoomReservationHistoryService) {}

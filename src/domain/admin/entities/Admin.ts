@@ -1,43 +1,50 @@
-import { Entity } from '../../../core/Entity';
-import { Email } from '../../customer/value-objects/Email';
-import { PersonName } from '../../customer/value-objects/PersonName';
-import { PhoneNumber } from '../../customer/value-objects/PhoneNumber';
+import { Entity } from '@core/Entity';
+import { Email } from '@domain/customer/value-objects/Email';
+import { PersonName } from '@domain/customer/value-objects/PersonName';
+import { PhoneNumber } from '@domain/customer/value-objects/PhoneNumber';
 import { AdminRoleVO, AdminRole } from '../value-objects/AdminRole';
 
 export interface IAdminProps {
-  customerId: string; // Un Admin est un Customer avec des droits supplémentaires
+  email: Email;
+  name: PersonName;
+  phoneNumber: PhoneNumber;
   role: AdminRoleVO;
-  hotelIds: string[]; // Hotels qu'il gère
   isActive: boolean;
   hiredDate: Date;
 }
 
 export class Admin extends Entity<IAdminProps> {
-  private _customerId: string;
+  private _email: Email;
+  private _name: PersonName;
+  private _phoneNumber: PhoneNumber;
   private _role: AdminRoleVO;
-  private _hotelIds: string[];
   private _isActive: boolean;
   private _hiredDate: Date;
 
   private constructor(props: IAdminProps, id?: string) {
     super(id);
-    this._customerId = props.customerId;
+    this._email = props.email;
+    this._name = props.name;
+    this._phoneNumber = props.phoneNumber;
     this._role = props.role;
-    this._hotelIds = [...props.hotelIds];
     this._isActive = props.isActive;
     this._hiredDate = props.hiredDate;
   }
 
-  get customerId(): string {
-    return this._customerId;
+  get email(): Email {
+    return this._email;
+  }
+
+  get name(): PersonName {
+    return this._name;
+  }
+
+  get phoneNumber(): PhoneNumber {
+    return this._phoneNumber;
   }
 
   get role(): AdminRoleVO {
     return this._role;
-  }
-
-  get hotelIds(): string[] {
-    return [...this._hotelIds];
   }
 
   get isActive(): boolean {
@@ -48,47 +55,19 @@ export class Admin extends Entity<IAdminProps> {
     return this._hiredDate;
   }
 
-  // Méthodes métier
-  public assignToHotel(hotelId: string): void {
-    if (!hotelId || hotelId.trim().length === 0) {
-      throw new Error('Hotel ID cannot be empty');
-    }
-
-    if (this._hotelIds.includes(hotelId)) {
-      throw new Error('Admin already assigned to this hotel');
-    }
-
-    // Super Admin peut gérer plusieurs hôtels
-    if (!this._role.isSuperAdmin() && this._hotelIds.length > 0) {
-      throw new Error('Only Super Admin can manage multiple hotels');
-    }
-
-    this._hotelIds.push(hotelId);
+  public updateEmail(newEmail: Email): void {
+    this._email = newEmail;
   }
 
-  public unassignFromHotel(hotelId: string): void {
-    const index = this._hotelIds.indexOf(hotelId);
-    if (index === -1) {
-      throw new Error('Admin not assigned to this hotel');
-    }
-
-    this._hotelIds.splice(index, 1);
+  public updateName(newName: PersonName): void {
+    this._name = newName;
   }
 
-  public isAssignedToHotel(hotelId: string): boolean {
-    return this._hotelIds.includes(hotelId);
-  }
-
-  public hasHotelAssignments(): boolean {
-    return this._hotelIds.length > 0;
+  public updatePhoneNumber(newPhoneNumber: PhoneNumber): void {
+    this._phoneNumber = newPhoneNumber;
   }
 
   public changeRole(newRole: AdminRoleVO): void {
-    // Si on passe de Super Admin à autre chose et qu'il gère plusieurs hôtels
-    if (this._role.isSuperAdmin() && !newRole.isSuperAdmin() && this._hotelIds.length > 1) {
-      throw new Error('Cannot change role: Admin manages multiple hotels. Unassign hotels first.');
-    }
-
     this._role = newRole;
   }
 
@@ -100,60 +79,30 @@ export class Admin extends Entity<IAdminProps> {
     this._isActive = false;
   }
 
-  public canManageHotel(hotelId: string): boolean {
-    if (!this._isActive) {
-      return false;
-    }
-
-    if (this._role.isSuperAdmin()) {
-      return true; // Super admin peut tout gérer
-    }
-
-    return this.isAssignedToHotel(hotelId) && this._role.canManageHotel();
-  }
-
-  // Factory methods
   public static create(
-    customerId: string,
-    role: AdminRole,
-    hotelId?: string,
+    email: string,
+    firstname: string,
+    lastname: string,
+    phoneNumber: string,
+    role: AdminRole = AdminRole.ADMIN,
     id?: string
   ): Admin {
-    if (!customerId || customerId.trim().length === 0) {
-      throw new Error('Customer ID is required');
-    }
-
+    const emailVO = Email.create(email);
+    const nameVO = PersonName.create(firstname, lastname);
+    const phoneNumberVO = PhoneNumber.create(phoneNumber);
     const roleVO = AdminRoleVO.create(role);
-    const hotelIds = hotelId ? [hotelId.trim()] : [];
 
     return new Admin(
       {
-        customerId: customerId.trim(),
+        email: emailVO,
+        name: nameVO,
+        phoneNumber: phoneNumberVO,
         role: roleVO,
-        hotelIds,
         isActive: true,
         hiredDate: new Date()
       },
       id
     );
-  }
-
-  public static createSuperAdmin(customerId: string, id?: string): Admin {
-    return this.create(customerId, AdminRole.SUPER_ADMIN, undefined, id);
-  }
-
-  public static createHotelManager(customerId: string, hotelId: string, id?: string): Admin {
-    if (!hotelId || hotelId.trim().length === 0) {
-      throw new Error('Hotel Manager must be assigned to a hotel');
-    }
-    return this.create(customerId, AdminRole.HOTEL_MANAGER, hotelId, id);
-  }
-
-  public static createReceptionist(customerId: string, hotelId: string, id?: string): Admin {
-    if (!hotelId || hotelId.trim().length === 0) {
-      throw new Error('Receptionist must be assigned to a hotel');
-    }
-    return this.create(customerId, AdminRole.RECEPTIONIST, hotelId, id);
   }
 
   public static fromValueObjects(props: IAdminProps, id?: string): Admin {

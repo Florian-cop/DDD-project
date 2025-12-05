@@ -173,6 +173,7 @@ export class ReservationRepository implements IReservationRepository {
 
   async save(entity: Reservation): Promise<void> {
     const totalPriceValue = entity.totalPrice.amount;
+    const statusDb = this.mapStatusToDb(entity.status.status);
 
     await this.prisma.reservation.upsert({
       where: { id: entity.id },
@@ -183,14 +184,14 @@ export class ReservationRepository implements IReservationRepository {
         checkIn: entity.checkInDate,
         checkOut: entity.checkOutDate,
         totalPrice: totalPriceValue,
-        status: this.mapStatusToDb(entity.status.status),
+        status: statusDb as any,
         createdAt: entity.reservationDate
       },
       update: {
         checkIn: entity.checkInDate,
         checkOut: entity.checkOutDate,
         totalPrice: totalPriceValue,
-        status: this.mapStatusToDb(entity.status.status)
+        status: statusDb as any
       }
     });
   }

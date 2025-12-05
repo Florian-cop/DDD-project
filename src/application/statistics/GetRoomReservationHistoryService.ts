@@ -1,15 +1,13 @@
 import { IReservationRepository } from '@domain/reservation/repositories/IReservationRepository';
 import { IRoomRepository } from '@domain/room/repositories/IRoomRepository';
 import { GetRoomReservationHistoryQuery } from './GetRoomReservationHistoryQuery';
-import { Reservation } from '@domain/reservation/entities/Reservation';
 
 export interface ReservationHistoryItem {
   reservationId: string;
   customerId: string;
-  checkInDate: Date;
-  checkOutDate: Date;
-  numberOfNights: number;
-  totalPrice: string;
+  checkIn: Date;
+  checkOut: Date;
+  totalPrice: number;
   status: string;
   reservationDate: Date;
 }
@@ -22,30 +20,25 @@ export class GetRoomReservationHistoryService {
 
   async execute(query: GetRoomReservationHistoryQuery): Promise<ReservationHistoryItem[]> {
     const room = await this.roomRepository.findOneById(query.roomId);
-
+    
     if (!room) {
       throw new Error(`Room with id "${query.roomId}" not found`);
     }
 
     const reservations = await this.reservationRepository.findByRoomId(query.roomId);
-
-    const sortedReservations = reservations.sort((a, b) => 
-      b.reservationDate.getTime() - a.reservationDate.getTime()
-    );
-
-    return sortedReservations.map(reservation => this.toHistoryItem(reservation));
-  }
-
-  private toHistoryItem(reservation: Reservation): ReservationHistoryItem {
-    return {
+    
+    const history: ReservationHistoryItem[] = reservations.map(reservation => ({
       reservationId: reservation.id,
       customerId: reservation.customerId,
-      checkInDate: reservation.checkInDate,
-      checkOutDate: reservation.checkOutDate,
-      numberOfNights: reservation.numberOfNights,
-      totalPrice: reservation.totalPrice.format(),
+      checkIn: reservation.dateRange.checkInDate,
+      checkOut: reservation.dateRange.checkOutDate,
+      totalPrice: reservation.totalPrice.amount,
       status: reservation.status.value,
       reservationDate: reservation.reservationDate
-    };
+    }));
+
+    history.sort((a, b) => b.reservationDate.getTime() - a.reservationDate.getTime());
+
+    return history;
   }
 }

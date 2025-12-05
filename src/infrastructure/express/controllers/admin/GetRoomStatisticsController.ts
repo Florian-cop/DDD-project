@@ -1,17 +1,13 @@
 import { Request, Response } from 'express';
-import { GetRoomStatisticsService } from '../../../../application/admin/GetRoomStatisticsService';
-import { GetRoomStatisticsQuery } from '../../../../application/admin/GetRoomStatisticsQuery';
+import { GetRoomStatisticsService } from '../../../../application/statistics/GetRoomStatisticsService';
+import { GetRoomStatisticsQuery } from '../../../../application/statistics/GetRoomStatisticsQuery';
 
 export class GetRoomStatisticsController {
   constructor(private readonly getRoomStatisticsService: GetRoomStatisticsService) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const { hotelId } = req.query;
-
-      const query = new GetRoomStatisticsQuery(
-        hotelId ? String(hotelId) : undefined
-      );
+      const query = new GetRoomStatisticsQuery();
 
       const statistics = await this.getRoomStatisticsService.execute(query);
 

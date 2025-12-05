@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { RoomRepository } from '../../db/repositories/RoomRepository';
 import { ReservationRepository } from '../../db/repositories/ReservationRepository';
-import { GetRoomStatisticsService } from '../../../application/admin/GetRoomStatisticsService';
-import { GetRoomReservationHistoryService } from '../../../application/admin/GetRoomReservationHistoryService';
+import { GetRoomStatisticsService } from '../../../application/statistics/GetRoomStatisticsService';
+import { GetRoomReservationHistoryService } from '../../../application/statistics/GetRoomReservationHistoryService';
 import { GetRoomStatisticsController } from '../controllers/admin/GetRoomStatisticsController';
 import { GetRoomReservationHistoryController } from '../controllers/admin/GetRoomReservationHistoryController';
 import { getPrismaClient } from '../../db/prisma';

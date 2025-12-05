@@ -8,9 +8,7 @@ type PrismaRoom = {
   id: string;
   number: string;
   type: string;
-  pricePerDay: any;
-  capacity: number;
-  description: string | null;
+  isAvailable: boolean;
   hotelId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -80,20 +78,21 @@ export class RoomRepository implements IRoomRepository {
   }
 
   async save(entity: Room): Promise<void> {
+    const typeDb = this.mapTypeToDb(entity.type.type);
+    
     await this.prisma.room.upsert({
       where: { id: entity.id },
       create: {
         id: entity.id,
         number: entity.roomNumber.value,
-        type: this.mapTypeToDb(entity.type.type),
-        pricePerDay: entity.pricePerNight,
-        capacity: 1,
+        type: typeDb as any,
+        isAvailable: entity.isAvailable,
         hotelId: 'default-hotel-id'
       },
       update: {
         number: entity.roomNumber.value,
-        type: this.mapTypeToDb(entity.type.type),
-        pricePerDay: entity.pricePerNight
+        type: typeDb as any,
+        isAvailable: entity.isAvailable
       }
     });
   }
@@ -111,7 +110,7 @@ export class RoomRepository implements IRoomRepository {
       prismaRoom.number,
       roomType,
       undefined,
-      true,
+      prismaRoom.isAvailable,
       prismaRoom.id
     );
 

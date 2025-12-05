@@ -57,11 +57,9 @@ enum RoomType {
 
 model Room {
   id          String   @id @default(uuid())
-  number      String
+  number      String   @unique
   type        RoomType
-  pricePerDay Decimal  @db.Decimal(10, 2)
-  capacity    Int
-  description String?
+  isAvailable Boolean  @default(true)
   hotelId     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -69,7 +67,6 @@ model Room {
   hotel        Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   reservations Reservation[]
 
-  @@unique([hotelId, number])
   @@map("rooms")
 }
 
@@ -98,13 +95,16 @@ model Reservation {
 }
 
 model Admin {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  firstname String
-  lastname  String
-  role      String   @default("ADMIN")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  email       String   @unique
+  firstname   String
+  lastname    String
+  phoneNumber String
+  role        String   @default("ADMIN")
+  isActive    Boolean  @default(true)
+  hiredDate   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("admins")
 }
