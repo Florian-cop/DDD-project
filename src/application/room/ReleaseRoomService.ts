@@ -35,8 +35,8 @@ export class ReleaseRoomService {
         throw new Error('Room is not part of this reservation');
       }
 
-      if (!reservation.status.isConfirmed()) {
-        throw new Error('Can only release room from confirmed reservations');
+      if (reservation.status.isCancelled()) {
+        throw new Error('Cannot release room from cancelled reservation');
       }
     }
 

@@ -10,9 +10,9 @@ export class Money extends ValueObject<IMoneyProps> {
   private static readonly CONVERSION_RATES: Record<Currency, number> = {
     [Currency.EUR]: 1,
     [Currency.USD]: 0.92,
-    [Currency.LS]: 1.17,
-    [Currency.YEN]: 0.0063,
-    [Currency.FS]: 1.06
+    [Currency.GBP]: 1.17,
+    [Currency.JPY]: 0.0063,
+    [Currency.CHF]: 1.06
   };
 
   get amount(): number {
