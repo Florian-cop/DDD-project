@@ -8,12 +8,20 @@ export class WalletRepository implements IWalletRepository {
   async findAll(): Promise<Wallet[]> {
     const wallets = await this.prisma.wallet.findMany();
     
-    return wallets.map((wallet) =>
-      Wallet.create(
+    return wallets.map((wallet) => {
+      const walletEntity = Wallet.create(
         wallet.customerId,
         wallet.id
-      )
-    );
+      );
+      
+      const balanceNumber = typeof wallet.balance === 'number' 
+        ? wallet.balance 
+        : parseFloat(wallet.balance.toString());
+      
+      (walletEntity as any)._balanceInEuros = balanceNumber;
+      
+      return walletEntity;
+    });
   }
 
   async findOneById(id: string): Promise<Wallet | null> {
@@ -25,10 +33,18 @@ export class WalletRepository implements IWalletRepository {
       return null;
     }
 
-    return Wallet.create(
+    const walletEntity = Wallet.create(
       wallet.customerId,
       wallet.id
     );
+    
+    const balanceNumber = typeof wallet.balance === 'number' 
+      ? wallet.balance 
+      : parseFloat(wallet.balance.toString());
+    
+    (walletEntity as any)._balanceInEuros = balanceNumber;
+    
+    return walletEntity;
   }
 
   async findByCustomerId(customerId: string): Promise<Wallet | null> {
@@ -40,10 +56,18 @@ export class WalletRepository implements IWalletRepository {
       return null;
     }
 
-    return Wallet.create(
+    const walletEntity = Wallet.create(
       wallet.customerId,
       wallet.id
     );
+    
+    const balanceNumber = typeof wallet.balance === 'number' 
+      ? wallet.balance 
+      : parseFloat(wallet.balance.toString());
+    
+    (walletEntity as any)._balanceInEuros = balanceNumber;
+    
+    return walletEntity;
   }
 
   async doesExists(id: string): Promise<boolean> {

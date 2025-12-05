@@ -1,4 +1,4 @@
-import { IAdminRepository } from '../../../domain/admin';
+import { IAdminRepository } from '../domain/admin/index';
 import { DeleteAdminCommand } from './DeleteAdminCommand';
 
 export class DeleteAdminService {

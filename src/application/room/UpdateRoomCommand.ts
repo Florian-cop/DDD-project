@@ -1,4 +1,4 @@
-import { RoomAccessory } from '../../../domain/room';
+import { RoomAccessory } from '../domain/room/index';
 
 export class UpdateRoomCommand {
   constructor(

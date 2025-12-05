@@ -22,6 +22,10 @@ export class TotalPrice extends ValueObject<ITotalPriceProps> {
     return `${this.props.amount.toFixed(2)} ${this.props.currency}`;
   }
 
+  public format(): string {
+    return this.formattedAmount;
+  }
+
   public static create(amount: number, currency: string = 'EUR'): TotalPrice {
     if (amount < 0) {
       throw new Error('Total price cannot be negative');

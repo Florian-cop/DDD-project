@@ -1,4 +1,4 @@
-import { IRoomRepository, Room, RoomNumber } from '../../../domain/room';
+import { IRoomRepository, Room, RoomNumber } from '../domain/room/index';
 import { CreateRoomCommand } from './CreateRoomCommand';
 
 export class CreateRoomService {

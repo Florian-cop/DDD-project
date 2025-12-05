@@ -1,4 +1,4 @@
-import { IHotelRepository, Hotel, HotelName } from '../../../domain/hotel';
+import { IHotelRepository, Hotel, HotelName } from '../domain/hotel/index';
 import { CreateHotelCommand } from './CreateHotelCommand';
 
 export class CreateHotelService {

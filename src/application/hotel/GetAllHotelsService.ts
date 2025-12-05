@@ -1,4 +1,4 @@
-import { IHotelRepository, Hotel } from '../../../domain/hotel';
+import { IHotelRepository, Hotel } from '../domain/hotel/index';
 
 export class GetAllHotelsService {
   constructor(private readonly hotelRepository: IHotelRepository) {}

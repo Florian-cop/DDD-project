@@ -1,5 +1,5 @@
-import { IAdminRepository, Admin } from '../../../domain/admin';
-import { ICustomerRepository } from '../../../domain/customer';
+import { IAdminRepository, Admin } from '../domain/admin/index';
+import { ICustomerRepository } from '../domain/customer/index';
 import { CreateAdminCommand } from './CreateAdminCommand';
 
 export class CreateAdminService {

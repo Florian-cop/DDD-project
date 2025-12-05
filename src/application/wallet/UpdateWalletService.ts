@@ -1,6 +1,8 @@
 import { Wallet } from '../../domain/wallet/entities/Wallet';
 import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
 import { ICustomerRepository } from '../../domain/customer/repositories/ICustomerRepository';
+import { Money } from '../../domain/wallet/value-objects/Money';
+import { Currency } from '../../domain/wallet/value-objects/Currency';
 import { UpdateWalletCommand } from './UpdateWalletCommand';
 
 export class UpdateWalletService {
@@ -22,7 +24,13 @@ export class UpdateWalletService {
       throw new Error(`Wallet for customer "${command.customerId}" not found`);
     }
 
-    wallet.updateBalance(command.newBalance);
+    const currencyUpper = command.currency.toUpperCase();
+    if (!Object.values(Currency).includes(currencyUpper as Currency)) {
+      throw new Error(`Invalid currency: ${command.currency}. Valid currencies: ${Object.values(Currency).join(', ')}`);
+    }
+
+    const money = Money.create(command.amount, currencyUpper as Currency);
+    wallet.addFunds(money);
 
     await this.walletRepository.save(wallet);
 

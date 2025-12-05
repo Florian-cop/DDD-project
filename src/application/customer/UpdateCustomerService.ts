@@ -4,7 +4,7 @@ import {
   Email, 
   PersonName, 
   PhoneNumber 
-} from '../../../domain/customer';
+} from '../domain/customer/index';
 import { UpdateCustomerCommand } from './UpdateCustomerCommand';
 
 export class UpdateCustomerService {

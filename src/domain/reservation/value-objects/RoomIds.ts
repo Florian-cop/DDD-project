@@ -37,6 +37,10 @@ export class RoomIds extends ValueObject<IRoomIdsProps> {
     return this.props.roomIds.includes(roomId);
   }
 
+  public hasRoom(roomId: string): boolean {
+    return this.includes(roomId);
+  }
+
   public addRoom(roomId: string): RoomIds {
     if (this.includes(roomId)) {
       return this; // Déjà présent

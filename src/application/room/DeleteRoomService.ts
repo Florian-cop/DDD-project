@@ -1,4 +1,4 @@
-import { IRoomRepository } from '../../../domain/room';
+import { IRoomRepository } from '../domain/room/index';
 import { DeleteRoomCommand } from './DeleteRoomCommand';
 
 export class DeleteRoomService {

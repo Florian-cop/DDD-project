@@ -1,4 +1,4 @@
-import { IAdminRepository, Admin } from '../../../domain/admin';
+import { IAdminRepository, Admin } from '../domain/admin/index';
 
 export class GetAllAdminsService {
   constructor(private readonly adminRepository: IAdminRepository) {}

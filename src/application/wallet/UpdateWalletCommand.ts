@@ -1,6 +1,7 @@
 export class UpdateWalletCommand {
   constructor(
     public readonly customerId: string,
-    public readonly newBalance: number
+    public readonly amount: number,
+    public readonly currency: string = 'EUR'
   ) {}
 }

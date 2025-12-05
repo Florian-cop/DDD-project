@@ -15,24 +15,29 @@ export class UpdateWalletController {
   async handle(req: Request, res: Response): Promise<void> {
     try {
       const { customerId } = req.params;
-      const { balance } = req.body;
+      const { amount, currency = 'EUR' } = req.body;
 
       if (!customerId) {
         res.status(400).json({ error: 'Customer ID is required' });
         return;
       }
 
-      if (balance === undefined || balance === null) {
-        res.status(400).json({ error: 'Balance is required' });
+      if (amount === undefined || amount === null) {
+        res.status(400).json({ error: 'Amount is required' });
         return;
       }
 
-      if (typeof balance !== 'number') {
-        res.status(400).json({ error: 'Balance must be a number' });
+      if (typeof amount !== 'number') {
+        res.status(400).json({ error: 'Amount must be a number' });
         return;
       }
 
-      const command = new UpdateWalletCommand(customerId, balance);
+      if (amount <= 0) {
+        res.status(400).json({ error: 'Amount must be positive' });
+        return;
+      }
+
+      const command = new UpdateWalletCommand(customerId, amount, currency);
 
       const wallet = await this.updateWalletService.execute(command);
 

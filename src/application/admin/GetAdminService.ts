@@ -1,4 +1,4 @@
-import { IAdminRepository, Admin } from '../../../domain/admin';
+import { IAdminRepository, Admin } from '../domain/admin/index';
 import { GetAdminQuery } from './GetAdminQuery';
 
 export class GetAdminService {

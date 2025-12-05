@@ -1,4 +1,4 @@
-import { ICustomerRepository, Customer, Email } from '../../../domain/customer';
+import { ICustomerRepository, Customer, Email } from '../domain/customer/index';
 import { IWalletRepository } from '../../../domain/wallet/repositories/IWalletRepository';
 import { Wallet } from '../../../domain/wallet/entities/Wallet';
 import { CreateCustomerCommand } from './CreateCustomerCommand';

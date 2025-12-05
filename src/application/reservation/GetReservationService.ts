@@ -1,4 +1,4 @@
-import { IReservationRepository, Reservation } from '../../../domain/reservation';
+import { IReservationRepository, Reservation } from '../domain/reservation/index';
 import { GetReservationQuery } from './GetReservationQuery';
 
 export class GetReservationService {

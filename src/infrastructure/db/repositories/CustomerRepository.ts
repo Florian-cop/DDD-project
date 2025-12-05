@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ICustomerRepository, Customer, Email } from '../../../domain/customer';
+import { ICustomerRepository, Customer, Email } from '../domain/customer/index';
 
 export class CustomerRepository implements ICustomerRepository {
   constructor(private readonly prisma: PrismaClient) {}

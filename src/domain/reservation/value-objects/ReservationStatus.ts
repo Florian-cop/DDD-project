@@ -19,6 +19,10 @@ export class ReservationStatusVO extends ValueObject<IReservationStatusProps> {
     return this.props.status;
   }
 
+  get value(): ReservationStatus {
+    return this.props.status;
+  }
+
   get label(): string {
     switch (this.props.status) {
       case ReservationStatus.BOOKED:

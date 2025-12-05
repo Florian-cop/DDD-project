@@ -1,4 +1,4 @@
-import { IReservationRepository } from '../../../domain/reservation';
+import { IReservationRepository } from '../domain/reservation/index';
 import { DeleteReservationCommand } from './DeleteReservationCommand';
 
 export class DeleteReservationService {

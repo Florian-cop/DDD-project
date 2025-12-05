@@ -1,4 +1,4 @@
-import { IAdminRepository, Admin, AdminRoleVO } from '../../../domain/admin';
+import { IAdminRepository, Admin, AdminRoleVO } from '../domain/admin/index';
 import { UpdateAdminCommand } from './UpdateAdminCommand';
 
 export class UpdateAdminService {

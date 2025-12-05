@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { GetCustomerService } from '../../../../application/customer/GetCustomerService';
 import { GetCustomerQuery } from '../../../../application/customer/GetCustomerQuery';
-import { Customer } from '../../../../domain/customer';
+import { Customer } from '../domain/customer/index';
 import { CustomerResponseDTO } from '../../dtos/CustomerDTO';
 
 export class GetCustomerController {
