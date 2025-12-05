@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { GetCustomerService } from '../../../../application/customer/get/GetCustomerService';
-import { GetCustomerQuery } from '../../../../application/customer/get/GetCustomerQuery';
+import { GetCustomerService } from '../../../../application/customer/GetCustomerService';
+import { GetCustomerQuery } from '../../../../application/customer/GetCustomerQuery';
 import { Customer } from '../../../../domain/customer';
 import { CustomerResponseDTO } from '../../dtos/CustomerDTO';
 

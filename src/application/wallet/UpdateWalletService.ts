@@ -1,22 +1,29 @@
 import { Wallet } from '../../domain/wallet/entities/Wallet';
 import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
+import { ICustomerRepository } from '../../domain/customer/repositories/ICustomerRepository';
+import { UpdateWalletCommand } from './UpdateWalletCommand';
 
 export class UpdateWalletService {
-  constructor(private readonly walletRepository: IWalletRepository) {}
+  constructor(
+    private readonly walletRepository: IWalletRepository,
+    private readonly customerRepository: ICustomerRepository
+  ) {}
 
-  async execute(id: string, newBalance: number): Promise<Wallet> {
-    const wallet = await this.walletRepository.findOneById(id);
+  async execute(command: UpdateWalletCommand): Promise<Wallet> {
+    const customer = await this.customerRepository.findOneById(command.customerId);
+    
+    if (!customer) {
+      throw new Error(`Customer with id "${command.customerId}" not found`);
+    }
+
+    const wallet = await this.walletRepository.findByCustomerId(command.customerId);
 
     if (!wallet) {
-      throw new Error(`Wallet with id "${id}" not found`);
+      throw new Error(`Wallet for customer "${command.customerId}" not found`);
     }
 
-    if (newBalance < 0) {
-      throw new Error('Balance cannot be negative');
-    }
+    wallet.updateBalance(command.newBalance);
 
-    // Note: Vous devriez ajouter une méthode updateBalance dans l'entité Wallet
-    // Pour l'instant, on sauvegarde tel quel
     await this.walletRepository.save(wallet);
 
     return wallet;

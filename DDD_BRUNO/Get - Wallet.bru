@@ -1,0 +1,46 @@
+meta {
+  name: Get Wallet by Customer ID
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3000/api/wallets/customer/{{customerId}}
+  body: none
+  auth: none
+}
+
+params:query {
+}
+
+headers {
+  Content-Type: application/json
+}
+
+vars:pre-request {
+}
+
+vars:post-response {
+}
+
+docs {
+  # Get Wallet by Customer ID
+  
+  Récupère le wallet d'un customer spécifique.
+  
+  ## Prérequis
+  - Le customer doit exister
+  - Le wallet doit avoir été créé (automatiquement lors de la création du customer)
+  
+  ## Variables
+  - `customerId` : L'ID du customer dont on veut récupérer le wallet
+  
+  ## Réponse attendue
+  ```json
+  {
+    "id": "wallet-uuid",
+    "balance": 0,
+    "customerId": "customer-uuid"
+  }
+  ```
+}

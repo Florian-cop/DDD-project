@@ -1,0 +1,40 @@
+meta {
+  name: Delete Wallet
+  type: http
+  seq: 3
+}
+
+delete {
+  url: http://localhost:3000/api/wallets/customer/{{customerId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+vars:pre-request {
+}
+
+vars:post-response {
+}
+
+docs {
+  # Delete Wallet
+  
+  Supprime le wallet d'un customer.
+  
+  ## Prérequis
+  - Le customer doit exister
+  - Le wallet doit exister
+  
+  ## Variables
+  - `customerId` : L'ID du customer dont on veut supprimer le wallet
+  
+  ## Réponse attendue
+  - Status: 204 No Content
+  
+  ## Note
+  Cette opération est irréversible. Le wallet sera supprimé définitivement.
+}

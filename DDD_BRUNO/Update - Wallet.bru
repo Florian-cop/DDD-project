@@ -1,0 +1,60 @@
+meta {
+  name: Update Wallet Balance
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/api/wallets/customer/{{customerId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "balance": 150.50
+  }
+}
+
+vars:pre-request {
+}
+
+vars:post-response {
+}
+
+docs {
+  # Update Wallet Balance
+  
+  Met à jour le solde du wallet d'un customer.
+  
+  ## Prérequis
+  - Le customer doit exister
+  - Le wallet doit avoir été créé
+  
+  ## Variables
+  - `customerId` : L'ID du customer dont on veut mettre à jour le wallet
+  
+  ## Body
+  ```json
+  {
+    "balance": 150.50
+  }
+  ```
+  
+  ## Règles de validation
+  - La balance doit être un nombre
+  - La balance ne peut pas être négative
+  
+  ## Réponse attendue
+  ```json
+  {
+    "id": "wallet-uuid",
+    "balance": 150.50,
+    "customerId": "customer-uuid"
+  }
+  ```
+}
