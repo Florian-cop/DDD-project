@@ -1,4 +1,4 @@
-import { IReservationRepository, Reservation } from '../domain/reservation/index';
+import { IReservationRepository, Reservation } from '@domain/reservation';
 import { UpdateReservationCommand } from './UpdateReservationCommand';
 
 export class UpdateReservationService {

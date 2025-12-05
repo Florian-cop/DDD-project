@@ -1,6 +1,6 @@
-import { IReservationRepository, Reservation } from '../domain/reservation/index';
-import { IWalletRepository } from '../../../domain/wallet/repositories/IWalletRepository';
-import { PaymentService } from '../../../domain/payment/PaymentService';
+import { IReservationRepository, Reservation } from '@domain/reservation';
+import { IWalletRepository } from '@domain/wallet';
+import { PaymentService } from '@domain/payment';
 import { CreateReservationCommand } from './CreateReservationCommand';
 
 export class CreateReservationService {

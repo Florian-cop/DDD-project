@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UpdateWalletService } from '../../../../application/wallet/UpdateWalletService';
 import { UpdateWalletCommand } from '../../../../application/wallet/UpdateWalletCommand';
-import { Wallet } from '../../../../domain/wallet/entities/Wallet';
+import { Wallet } from '@domain/wallet';
 
 interface WalletResponseDTO {
   id: string;

@@ -1,5 +1,5 @@
-import { Wallet } from '../../domain/wallet/entities/Wallet';
-import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
+import { Wallet } from '@domain/wallet';
+import { IWalletRepository } from '@domain/wallet';
 
 export class CreateWalletService {
   constructor(private readonly walletRepository: IWalletRepository) {}

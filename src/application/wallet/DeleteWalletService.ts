@@ -1,5 +1,5 @@
-import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
-import { ICustomerRepository } from '../../domain/customer/repositories/ICustomerRepository';
+import { IWalletRepository } from '@domain/wallet';
+import { ICustomerRepository } from '@domain/customer/repositories/ICustomerRepository';
 import { DeleteWalletCommand } from './DeleteWalletCommand';
 
 export class DeleteWalletService {

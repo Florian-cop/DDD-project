@@ -1,4 +1,4 @@
-import { AdminRole } from '../domain/admin/index';
+import { AdminRole } from '@domain/admin';
 
 export class UpdateAdminCommand {
   constructor(

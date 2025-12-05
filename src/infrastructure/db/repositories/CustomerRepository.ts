@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ICustomerRepository, Customer, Email } from '../domain/customer/index';
+import { ICustomerRepository, Customer, Email } from '@domain/customer';
 
 export class CustomerRepository implements ICustomerRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -7,7 +7,7 @@ export class CustomerRepository implements ICustomerRepository {
   async findAll(): Promise<Customer[]> {
     const customers = await this.prisma.customer.findMany();
     
-    return customers.map((customer) =>
+    return customers.map((customer: any) =>
       Customer.create(
         customer.email,
         customer.firstname,

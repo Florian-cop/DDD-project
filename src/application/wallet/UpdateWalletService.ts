@@ -1,8 +1,5 @@
-import { Wallet } from '../../domain/wallet/entities/Wallet';
-import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
-import { ICustomerRepository } from '../../domain/customer/repositories/ICustomerRepository';
-import { Money } from '../../domain/wallet/value-objects/Money';
-import { Currency } from '../../domain/wallet/value-objects/Currency';
+import { Wallet, IWalletRepository, Money, Currency } from '@domain/wallet';
+import { ICustomerRepository } from '@domain/customer/repositories/ICustomerRepository';
 import { UpdateWalletCommand } from './UpdateWalletCommand';
 
 export class UpdateWalletService {

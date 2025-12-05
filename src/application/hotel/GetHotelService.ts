@@ -1,4 +1,4 @@
-import { IHotelRepository, Hotel } from '../domain/hotel/index';
+import { IHotelRepository, Hotel } from '@domain/hotel';
 import { GetHotelQuery } from './GetHotelQuery';
 
 export class GetHotelService {

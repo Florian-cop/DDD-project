@@ -1,7 +1,7 @@
-import { IReservationRepository } from '../../domain/reservation/repositories/IReservationRepository';
-import { IRoomRepository } from '../../domain/room/repositories/IRoomRepository';
+import { IReservationRepository } from '@domain/reservation/repositories/IReservationRepository';
+import { IRoomRepository } from '@domain/room/repositories/IRoomRepository';
 import { GetRoomReservationHistoryQuery } from './GetRoomReservationHistoryQuery';
-import { Reservation } from '../../domain/reservation/entities/Reservation';
+import { Reservation } from '@domain/reservation/entities/Reservation';
 
 export interface ReservationHistoryItem {
   reservationId: string;

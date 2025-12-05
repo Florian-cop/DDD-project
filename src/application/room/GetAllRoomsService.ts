@@ -1,4 +1,4 @@
-import { IRoomRepository, Room } from '../domain/room/index';
+import { IRoomRepository, Room } from '@domain/room';
 
 export class GetAllRoomsService {
   constructor(private readonly roomRepository: IRoomRepository) {}

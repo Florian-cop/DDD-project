@@ -1,4 +1,4 @@
-import { IRoomRepository, Room } from '../domain/room/index';
+import { IRoomRepository, Room } from '@domain/room';
 import { GetRoomQuery } from './GetRoomQuery';
 
 export class GetRoomService {

@@ -1,4 +1,4 @@
-import { IHotelRepository } from '../domain/hotel/index';
+import { IHotelRepository } from '@domain/hotel';
 import { DeleteHotelCommand } from './DeleteHotelCommand';
 
 export class DeleteHotelService {

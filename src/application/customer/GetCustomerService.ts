@@ -1,4 +1,4 @@
-import { ICustomerRepository, Customer } from '../domain/customer/index';
+import { ICustomerRepository, Customer } from '@domain/customer';
 import { GetCustomerQuery } from './GetCustomerQuery';
 
 export class GetCustomerService {

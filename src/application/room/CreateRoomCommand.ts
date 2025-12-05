@@ -1,4 +1,4 @@
-import { RoomTypeEnum } from '../domain/room/index';
+import { RoomTypeEnum } from '@domain/room';
 
 export class CreateRoomCommand {
   constructor(

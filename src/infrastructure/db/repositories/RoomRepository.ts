@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import { IRoomRepository } from '../../../domain/room/repositories/IRoomRepository';
-import { Room } from '../../../domain/room/entities/Room';
-import { RoomNumber } from '../../../domain/room/value-objects/RoomNumber';
-import { RoomTypeEnum } from '../../../domain/room/value-objects/RoomType';
+import { IRoomRepository } from '@domain/room/repositories/IRoomRepository';
+import { Room } from '@domain/room/entities/Room';
+import { RoomNumber } from '@domain/room/value-objects/RoomNumber';
+import { RoomTypeEnum } from '@domain/room/value-objects/RoomType';
 
 type PrismaRoom = {
   id: string;

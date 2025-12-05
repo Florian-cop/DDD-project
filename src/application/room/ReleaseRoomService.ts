@@ -1,7 +1,7 @@
-import { IRoomRepository } from '../../domain/room/repositories/IRoomRepository';
-import { IReservationRepository } from '../../domain/reservation/repositories/IReservationRepository';
+import { IRoomRepository } from '@domain/room/repositories/IRoomRepository';
+import { IReservationRepository } from '@domain/reservation/repositories/IReservationRepository';
 import { ReleaseRoomCommand } from './ReleaseRoomCommand';
-import { Room } from '../../domain/room/entities/Room';
+import { Room } from '@domain/room/entities/Room';
 
 export class ReleaseRoomService {
   constructor(

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { GetWalletService } from '../../../../application/wallet/GetWalletService';
 import { GetWalletQuery } from '../../../../application/wallet/GetWalletQuery';
-import { Wallet } from '../../../../domain/wallet/entities/Wallet';
+import { Wallet } from '@domain/wallet';
 
 interface WalletResponseDTO {
   id: string;

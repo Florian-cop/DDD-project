@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { IWalletRepository } from '../../../domain/wallet/repositories/IWalletRepository';
-import { Wallet } from '../../../domain/wallet/entities/Wallet';
+import { IWalletRepository } from '@domain/wallet';
+import { Wallet } from '@domain/wallet';
 
 export class WalletRepository implements IWalletRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -8,7 +8,7 @@ export class WalletRepository implements IWalletRepository {
   async findAll(): Promise<Wallet[]> {
     const wallets = await this.prisma.wallet.findMany();
     
-    return wallets.map((wallet) => {
+    return wallets.map((wallet: any) => {
       const walletEntity = Wallet.create(
         wallet.customerId,
         wallet.id

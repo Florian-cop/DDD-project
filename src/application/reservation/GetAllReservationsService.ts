@@ -1,4 +1,4 @@
-import { IReservationRepository, Reservation } from '../domain/reservation/index';
+import { IReservationRepository, Reservation } from '@domain/reservation';
 
 export class GetAllReservationsService {
   constructor(private readonly reservationRepository: IReservationRepository) {}

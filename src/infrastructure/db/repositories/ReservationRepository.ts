@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { IReservationRepository } from '../../../domain/reservation/repositories/IReservationRepository';
-import { Reservation } from '../../../domain/reservation/entities/Reservation';
-import { ReservationStatus } from '../../../domain/reservation/value-objects/ReservationStatus';
-import { DateRange } from '../../../domain/reservation/value-objects/DateRange';
-import { RoomIds } from '../../../domain/reservation/value-objects/RoomIds';
-import { TotalPrice } from '../../../domain/reservation/value-objects/TotalPrice';
-import { ReservationStatusVO } from '../../../domain/reservation/value-objects/ReservationStatus';
+import { IReservationRepository } from '@domain/reservation/repositories/IReservationRepository';
+import { Reservation } from '@domain/reservation/entities/Reservation';
+import { ReservationStatus } from '@domain/reservation/value-objects/ReservationStatus';
+import { DateRange } from '@domain/reservation/value-objects/DateRange';
+import { RoomIds } from '@domain/reservation/value-objects/RoomIds';
+import { TotalPrice } from '@domain/reservation/value-objects/TotalPrice';
+import { ReservationStatusVO } from '@domain/reservation/value-objects/ReservationStatus';
 
 type PrismaReservation = {
   id: string;

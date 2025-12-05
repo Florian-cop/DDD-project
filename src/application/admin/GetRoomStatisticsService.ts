@@ -1,4 +1,4 @@
-import { IRoomRepository } from '../../domain/room/repositories/IRoomRepository';
+import { IRoomRepository } from '@domain/room/repositories/IRoomRepository';
 import { GetRoomStatisticsQuery } from './GetRoomStatisticsQuery';
 
 export interface RoomStatistics {
