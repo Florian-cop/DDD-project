@@ -1,0 +1,33 @@
+meta {
+  name: Delete - Customer
+  type: http
+  seq: 3
+}
+
+delete {
+  url: http://localhost:3000/api/customers/{{customerId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  customerId: 550e8400-e29b-41d4-a716-446655440000
+}
+
+docs {
+  # Supprimer un client
+  
+  Supprime définitivement un client du système.
+  
+  ## Variables
+  - `customerId` : L'ID du client à supprimer
+  
+  ## Réponse 204
+  Pas de contenu (suppression réussie)
+  
+  ## Erreurs possibles
+  - **404** : Client non trouvé
+  
+  ## ⚠️ Attention
+  Cette action est irréversible. Le client et son wallet seront supprimés.
+}

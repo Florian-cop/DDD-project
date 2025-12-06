@@ -1,0 +1,40 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3000/health
+  body: none
+  auth: none
+}
+
+docs {
+  # Health Check
+  
+  Vérifie la santé de l'application et la connexion à la base de données PostgreSQL.
+  
+  ## Réponse 200 (OK)
+  ```json
+  {
+    "status": "ok",
+    "timestamp": "2025-12-06T10:30:00.000Z",
+    "database": "connected"
+  }
+  ```
+  
+  ## Réponse 503 (Service Unavailable)
+  ```json
+  {
+    "status": "error",
+    "timestamp": "2025-12-06T10:30:00.000Z",
+    "database": "disconnected"
+  }
+  ```
+  
+  ## Utilisation
+  - Monitoring : Vérifier que l'API est accessible
+  - Docker health check : Utilisé par Docker Compose
+  - CI/CD : Tests de déploiement
+}

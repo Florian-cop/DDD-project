@@ -1,0 +1,40 @@
+meta {
+  name: Get - Customer By ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/api/customers/{{customerId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  customerId: 550e8400-e29b-41d4-a716-446655440000
+}
+
+docs {
+  # Récupérer un client par ID
+  
+  Récupère les détails d'un client spécifique.
+  
+  ## Variables
+  - `customerId` : L'ID du client à récupérer
+  
+  ## Réponse 200
+  ```json
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "email": "alice.smith@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith",
+    "phoneNumber": "+33612345678",
+    "createdAt": "2025-12-06T10:00:00Z",
+    "updatedAt": "2025-12-06T10:00:00Z"
+  }
+  ```
+  
+  ## Erreurs possibles
+  - **404** : Client non trouvé
+}

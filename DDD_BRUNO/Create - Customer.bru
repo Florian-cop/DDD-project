@@ -1,0 +1,67 @@
+meta {
+  name: Create - Customer
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/customers
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "alice.smith@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith",
+    "phoneNumber": "+33612345678"
+  }
+}
+
+vars:post-response {
+  customerId: res.body.id
+}
+
+docs {
+  # Créer un nouveau client
+  
+  Crée un nouveau client dans le système. Un wallet avec solde 0€ est automatiquement créé.
+  
+  ## Body requis
+  ```json
+  {
+    "email": "alice.smith@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith",
+    "phoneNumber": "+33612345678"
+  }
+  ```
+  
+  ## Règles de validation
+  - **email** : Format email valide (unique dans le système)
+  - **firstname** : Minimum 1 caractère, maximum 100
+  - **lastname** : Minimum 1 caractère, maximum 100
+  - **phoneNumber** : Format téléphone valide (regex: /^\+?[0-9\s\-()]+$/)
+  
+  ## Réponse 201
+  ```json
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "email": "alice.smith@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith",
+    "phoneNumber": "+33612345678",
+    "createdAt": "2025-12-06T10:00:00Z",
+    "updatedAt": "2025-12-06T10:00:00Z"
+  }
+  ```
+  
+  ## Erreurs possibles
+  - **400** : Validation échouée (email invalide, champs manquants)
+  - **400** : Email déjà existant
+}

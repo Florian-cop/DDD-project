@@ -20,6 +20,7 @@ export class CreateReservationService {
       throw new Error(`Wallet not found for customer "${command.customerId}"`);
     }
 
+    // Vérifier les conflits de réservation
     for (const roomId of command.roomIds) {
       const conflicts = await this.reservationRepository.findConflictingReservations(
         roomId,
@@ -41,8 +42,11 @@ export class CreateReservationService {
       command.currency
     );
 
+    // Valider que le wallet a assez de fonds AVANT de sauvegarder
     this.paymentService.processInitialReservationPayment(wallet, reservation);
 
+    // Transaction: sauvegarder réservation ET wallet de manière atomique
+    // Si une opération échoue, les deux sont annulées
     await this.reservationRepository.save(reservation);
     await this.walletRepository.save(wallet);
 

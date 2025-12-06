@@ -28,7 +28,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./prisma:/app/prisma
-    command: sh -c "npx prisma migrate deploy && npm start"
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm start"
 
 volumes:
   postgres_data:

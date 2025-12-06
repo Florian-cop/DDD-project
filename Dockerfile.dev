@@ -1,0 +1,33 @@
+# ===================================
+# Dockerfile optimisé pour développement
+# ===================================
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Installer dumb-init
+RUN apk add --no-cache dumb-init
+
+# Copier les fichiers de dépendances
+COPY package*.json ./
+
+# Installer toutes les dépendances (dev + prod)
+RUN npm install
+
+# Copier le code source
+COPY . .
+
+# Générer Prisma
+RUN npx prisma generate
+
+# Exposer le port
+EXPOSE 3000
+
+# Variables d'environnement
+ENV NODE_ENV=development
+
+# Utiliser dumb-init
+ENTRYPOINT ["dumb-init", "--"]
+
+# Commande de démarrage en mode watch
+CMD ["npm", "run", "dev"]

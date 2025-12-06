@@ -1,0 +1,68 @@
+meta {
+  name: Update - Customer
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/api/customers/{{customerId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "alice.updated@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith-Updated",
+    "phoneNumber": "+33698765432"
+  }
+}
+
+vars:pre-request {
+  customerId: 550e8400-e29b-41d4-a716-446655440000
+}
+
+docs {
+  # Mettre à jour un client
+  
+  Met à jour les informations d'un client existant.
+  
+  ## Variables
+  - `customerId` : L'ID du client à mettre à jour
+  
+  ## Body (tous les champs optionnels)
+  ```json
+  {
+    "email": "alice.updated@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith-Updated",
+    "phoneNumber": "+33698765432"
+  }
+  ```
+  
+  ## Règles de validation
+  - Mêmes règles que lors de la création
+  - Tous les champs sont optionnels
+  
+  ## Réponse 200
+  ```json
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "email": "alice.updated@example.com",
+    "firstname": "Alice",
+    "lastname": "Smith-Updated",
+    "phoneNumber": "+33698765432",
+    "createdAt": "2025-12-06T10:00:00Z",
+    "updatedAt": "2025-12-06T11:00:00Z"
+  }
+  ```
+  
+  ## Erreurs possibles
+  - **400** : Validation échouée
+  - **404** : Client non trouvé
+}
