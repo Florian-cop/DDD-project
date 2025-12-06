@@ -14,10 +14,11 @@ export class Email extends ValueObject<IEmailProps> {
   }
 
   public static create(email: string): Email {
-    if (!this.isValid(email)) {
+    const trimmedEmail = email.trim();
+    if (!this.isValid(trimmedEmail)) {
       throw new Error(`Email "${email}" is not valid`);
     }
-    return new Email({ value: email.toLowerCase().trim() });
+    return new Email({ value: trimmedEmail.toLowerCase() });
   }
 
   private static isValid(email: string): boolean {

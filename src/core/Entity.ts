@@ -6,4 +6,11 @@ export abstract class Entity<TInitProps> {
   constructor(id?: string) {
     this.id = id || UUID();
   }
+
+  public equals(entity?: Entity<TInitProps>): boolean {
+    if (entity === null || entity === undefined) {
+      return false;
+    }
+    return this.id === entity.id;
+  }
 } 

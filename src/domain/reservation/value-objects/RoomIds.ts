@@ -13,6 +13,10 @@ export class RoomIds extends ValueObject<IRoomIdsProps> {
     return [...this.props.roomIds];
   }
 
+  get ids(): string[] {
+    return this.value;
+  }
+
   get count(): number {
     return this.props.roomIds.length;
   }

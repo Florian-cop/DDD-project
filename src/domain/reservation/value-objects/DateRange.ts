@@ -82,4 +82,12 @@ export class DateRange extends ValueObject<IDateRangeProps> {
     const now = new Date();
     return this.props.checkInDate <= now && this.props.checkOutDate > now;
   }
+
+  public equals(other?: DateRange): boolean {
+    if (!other || !(other instanceof DateRange)) {
+      return false;
+    }
+    return this.props.checkInDate.getTime() === other.props.checkInDate.getTime() &&
+           this.props.checkOutDate.getTime() === other.props.checkOutDate.getTime();
+  }
 }
