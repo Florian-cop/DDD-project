@@ -49,7 +49,6 @@ export class Room extends Entity<IRoomProps> {
     return this._type.name;
   }
 
-  // Méthodes métier
   public makeAvailable(): void {
     this._isAvailable = true;
   }
@@ -71,7 +70,7 @@ export class Room extends Entity<IRoomProps> {
   }
 
   public upgradeType(newType: RoomType): void {
-    // Validation métier : on ne peut pas downgrade
+    
     const typeOrder = [RoomTypeEnum.STANDARD, RoomTypeEnum.DELUXE, RoomTypeEnum.SUITE];
     const currentIndex = typeOrder.indexOf(this._type.type);
     const newIndex = typeOrder.indexOf(newType.type);
@@ -81,11 +80,10 @@ export class Room extends Entity<IRoomProps> {
     }
 
     this._type = newType;
-    // Mettre à jour les accessoires avec ceux par défaut du nouveau type
+    
     this._accessories = RoomAccessories.create(newType.defaultAccessories);
   }
 
-  // Factory methods
   public static create(
     roomNumber: string,
     type: RoomTypeEnum,
@@ -95,8 +93,7 @@ export class Room extends Entity<IRoomProps> {
   ): Room {
     const roomNumberVO = RoomNumber.create(roomNumber);
     const roomTypeVO = RoomType.create(type);
-    
-    // Utiliser les accessoires par défaut du type ou les accessoires personnalisés
+
     const accessories = customAccessories 
       ? RoomAccessories.create(customAccessories)
       : RoomAccessories.create(roomTypeVO.defaultAccessories);

@@ -1,9 +1,5 @@
 import { cleanEnv, str, port } from 'envalid';
 
-/**
- * Validation des variables d'environnement au démarrage
- * Lance une erreur si des variables requises sont manquantes ou invalides
- */
 export const validateEnv = () => {
   return cleanEnv(process.env, {
     DATABASE_URL: str({

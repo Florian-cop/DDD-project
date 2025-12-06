@@ -1,10 +1,5 @@
 import { z } from 'zod';
 
-/**
- * Schémas de validation Zod pour les endpoints API
- */
-
-// Customer
 export const createCustomerSchema = z.object({
   email: z.string().email('Email invalide'),
   firstname: z.string().min(1, 'Le prénom est requis').max(100),
@@ -19,13 +14,11 @@ export const updateCustomerSchema = z.object({
   phoneNumber: z.string().regex(/^\+?[0-9\s\-()]+$/).optional(),
 });
 
-// Wallet
 export const updateWalletSchema = z.object({
   amount: z.number().positive('Le montant doit être positif'),
   currency: z.enum(['EUR', 'USD', 'GBP', 'JPY', 'CHF']),
 });
 
-// Room
 export const createRoomSchema = z.object({
   roomNumber: z.string().min(1, 'Le numéro de chambre est requis'),
   type: z.enum(['STANDARD', 'DELUXE', 'SUITE']),
@@ -38,7 +31,6 @@ export const updateRoomSchema = z.object({
   isAvailable: z.boolean().optional(),
 });
 
-// Reservation
 export const createReservationSchema = z.object({
   customerId: z.string().uuid('ID client invalide'),
   roomIds: z.array(z.string().uuid('ID chambre invalide')).min(1, 'Au moins une chambre requise'),
@@ -89,12 +81,10 @@ export const cancelReservationSchema = z.object({
   id: z.string().uuid('ID réservation invalide'),
 });
 
-// Room
 export const releaseRoomSchema = z.object({
   customerId: z.string().uuid('ID client invalide'),
 });
 
-// Query params
 export const paginationSchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().positive().max(100).default(20),
@@ -112,7 +102,6 @@ export const reservationFilterSchema = z.object({
   checkOutDate: z.string().datetime().optional(),
 });
 
-// Types TypeScript inférés
 export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
 export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>;
 export type UpdateWalletInput = z.infer<typeof updateWalletSchema>;

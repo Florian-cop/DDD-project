@@ -23,7 +23,6 @@ export function registerReservationCommands(program: Command) {
     .command('reservation')
     .description('Gestion des réservations');
 
-  // Create reservation
   reservation
     .command('create')
     .description('Effectuer une réservation')
@@ -46,12 +45,9 @@ export function registerReservationCommands(program: Command) {
           reservationRepository,
           walletRepository
         );
-        
-        // Calculate number of nights
+
         const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
-        
-        // For now, use a default price of 50 EUR per night per room
-        // In production, you would fetch room details first
+
         const totalPrice = roomIds.length * nights * 50;
         
         const command = {
@@ -77,7 +73,6 @@ export function registerReservationCommands(program: Command) {
       }
     });
 
-  // Confirm reservation
   reservation
     .command('confirm')
     .description('Confirmer une réservation (payer les 50% restants)')
@@ -104,7 +99,6 @@ export function registerReservationCommands(program: Command) {
       }
     });
 
-  // Cancel reservation
   reservation
     .command('cancel')
     .description('Annuler une réservation (aucun remboursement)')
@@ -124,7 +118,6 @@ export function registerReservationCommands(program: Command) {
       }
     });
 
-  // Get reservation
   reservation
     .command('get')
     .description('Afficher les détails d\'une réservation')
@@ -143,7 +136,6 @@ export function registerReservationCommands(program: Command) {
       }
     });
 
-  // List reservations
   reservation
     .command('list')
     .description('Lister toutes les réservations')
@@ -154,7 +146,6 @@ export function registerReservationCommands(program: Command) {
         const service = new GetAllReservationsService(reservationRepository);
         let reservations = await service.execute();
 
-        // Apply filters
         if (options.customerId) {
           reservations = reservations.filter(r => r.customerId === options.customerId);
         }

@@ -20,7 +20,6 @@ export function registerWalletCommands(program: Command) {
     .command('wallet')
     .description('Gestion des portefeuilles');
 
-  // Create wallet
   wallet
     .command('create')
     .description('Créer un portefeuille pour un client')
@@ -40,7 +39,6 @@ export function registerWalletCommands(program: Command) {
       }
     });
 
-  // Add funds
   wallet
     .command('add-funds')
     .description('Alimenter un portefeuille')
@@ -64,8 +62,7 @@ export function registerWalletCommands(program: Command) {
         
         displayTitle('Fonds Ajoutés');
         displaySuccess(`${amount} ${options.currency.toUpperCase()} ajoutés au portefeuille!`);
-        
-        // Display updated balance
+
         const getService = new GetWalletService(walletRepository, customerRepository);
         const query = new GetWalletQuery(options.customerId);
         const walletEntity = await getService.execute(query);
@@ -76,7 +73,6 @@ export function registerWalletCommands(program: Command) {
       }
     });
 
-  // Get wallet
   wallet
     .command('get')
     .description('Afficher un portefeuille')
@@ -95,7 +91,6 @@ export function registerWalletCommands(program: Command) {
       }
     });
 
-  // List all wallets
   wallet
     .command('list')
     .description('Lister tous les portefeuilles')

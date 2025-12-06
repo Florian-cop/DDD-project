@@ -26,12 +26,10 @@ export class ConfirmReservationService {
       throw new Error(`Wallet not found for customer "${reservation.customerId}"`);
     }
 
-    // Valider le paiement AVANT de confirmer
     this.paymentService.processReservationConfirmationPayment(wallet, reservation);
 
     reservation.confirm();
 
-    // Transaction: sauvegarder réservation confirmée ET wallet débité de manière atomique
     await this.reservationRepository.save(reservation);
     await this.walletRepository.save(wallet);
 

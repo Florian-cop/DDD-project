@@ -20,7 +20,6 @@ export function registerCustomerCommands(program: Command) {
     .command('customer')
     .description('Gestion des clients');
 
-  // Create customer
   customer
     .command('create')
     .description('Créer un nouveau client')
@@ -50,7 +49,6 @@ export function registerCustomerCommands(program: Command) {
       }
     });
 
-  // List all customers
   customer
     .command('list')
     .description('Lister tous les clients')
@@ -79,7 +77,6 @@ export function registerCustomerCommands(program: Command) {
       }
     });
 
-  // Get customer by ID
   customer
     .command('get')
     .description('Afficher les détails d\'un client')
@@ -98,7 +95,6 @@ export function registerCustomerCommands(program: Command) {
       }
     });
 
-  // Update customer
   customer
     .command('update')
     .description('Mettre à jour un client')
@@ -127,7 +123,6 @@ export function registerCustomerCommands(program: Command) {
       }
     });
 
-  // Delete customer
   customer
     .command('delete')
     .description('Supprimer un client')

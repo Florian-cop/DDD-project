@@ -26,10 +26,8 @@ export class RoomIds extends ValueObject<IRoomIdsProps> {
       throw new Error('Reservation must have at least one room');
     }
 
-    // Enlever les doublons
     const uniqueRoomIds = Array.from(new Set(roomIds));
 
-    // Validation : vérifier que tous les IDs sont valides (non vides)
     if (uniqueRoomIds.some(id => !id || id.trim().length === 0)) {
       throw new Error('All room IDs must be valid');
     }
@@ -47,7 +45,7 @@ export class RoomIds extends ValueObject<IRoomIdsProps> {
 
   public addRoom(roomId: string): RoomIds {
     if (this.includes(roomId)) {
-      return this; // Déjà présent
+      return this; 
     }
 
     if (!roomId || roomId.trim().length === 0) {

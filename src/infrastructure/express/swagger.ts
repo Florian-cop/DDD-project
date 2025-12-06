@@ -229,7 +229,7 @@ const options: swaggerJsdoc.Options = {
       },
     },
   },
-  apis: ['./src/infrastructure/express/router/*.ts'], // Chemins des fichiers à documenter
+  apis: ['./src/infrastructure/express/router/*.ts'], 
 };
 
 export const swaggerSpec = swaggerJsdoc(options);

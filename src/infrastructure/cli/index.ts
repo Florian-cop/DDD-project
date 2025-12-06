@@ -17,14 +17,12 @@ program
   .description(chalk.blue.bold('🏨 XYZ Hotel - Système de gestion des réservations'))
   .version('1.0.0');
 
-// Register all command groups
 registerCustomerCommands(program);
 registerWalletCommands(program);
 registerRoomCommands(program);
 registerReservationCommands(program);
 registerAdminCommands(program);
 
-// Global error handler
 program.exitOverride();
 
 async function main() {

@@ -20,7 +20,6 @@ export function registerRoomCommands(program: Command) {
     .command('room')
     .description('Gestion des chambres');
 
-  // Create room
   room
     .command('create')
     .description('Créer une nouvelle chambre')
@@ -45,8 +44,7 @@ export function registerRoomCommands(program: Command) {
         displayTitle('Chambre Créée');
         displaySuccess('Chambre créée avec succès!');
         console.log(chalk.bold('ID de la chambre:'), chalk.green(roomId));
-        
-        // Get room details
+
         const getService = new GetRoomService(roomRepository);
         const query = new GetRoomQuery(roomId);
         const roomEntity = await getService.execute(query);
@@ -59,7 +57,6 @@ export function registerRoomCommands(program: Command) {
       }
     });
 
-  // List all rooms
   room
     .command('list')
     .description('Lister toutes les chambres')
@@ -70,7 +67,6 @@ export function registerRoomCommands(program: Command) {
         const service = new GetAllRoomsService(roomRepository);
         let rooms = await service.execute();
 
-        // Apply filters
         if (options.available) {
           rooms = rooms.filter(r => r.isAvailable);
         }
@@ -86,7 +82,6 @@ export function registerRoomCommands(program: Command) {
           return;
         }
 
-        // Group by type
         const roomsByType = {
           'Standard Room': rooms.filter(r => r.typeName === 'Standard Room'),
           'Deluxe Room': rooms.filter(r => r.typeName === 'Deluxe Room'),
@@ -111,7 +106,6 @@ export function registerRoomCommands(program: Command) {
       }
     });
 
-  // Get room by ID
   room
     .command('get')
     .description('Afficher les détails d\'une chambre')
@@ -124,8 +118,7 @@ export function registerRoomCommands(program: Command) {
 
         displayTitle('Détails de la Chambre');
         displayRoom(roomEntity);
-        
-        // Display accessories
+
         displaySubtitle('Équipements');
         const accessories = [
           roomEntity.hasAccessory('bed') && 'Lit simple',
@@ -146,7 +139,6 @@ export function registerRoomCommands(program: Command) {
       }
     });
 
-  // Release room
   room
     .command('release')
     .description('Libérer une chambre (la rendre disponible)')
@@ -170,7 +162,6 @@ export function registerRoomCommands(program: Command) {
       }
     });
 
-  // Display room info (public feature)
   room
     .command('info')
     .description('Afficher les informations des types de chambres')

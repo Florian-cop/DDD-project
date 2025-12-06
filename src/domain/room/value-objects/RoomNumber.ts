@@ -20,7 +20,6 @@ export class RoomNumber extends ValueObject<IRoomNumberProps> {
 
     const trimmedNumber = roomNumber.trim().toUpperCase();
 
-    // Validation: format XXX ou X-XXX (ex: 101, 1-01, A-101, A101)
     const roomNumberRegex = /^[A-Z0-9]{1,4}(-[A-Z0-9]{1,3})?$/;
     if (!roomNumberRegex.test(trimmedNumber)) {
       throw new Error(`Room number "${roomNumber}" is not valid. Expected format: XXX or X-XXX`);

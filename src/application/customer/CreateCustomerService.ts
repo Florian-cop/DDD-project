@@ -24,7 +24,6 @@ export class CreateCustomerService {
       command.phoneNumber
     );
 
-    // Transaction: créer client ET wallet de manière atomique
     await this.customerRepository.save(customer);
     const wallet = Wallet.create(customer.id);
     await this.walletRepository.save(wallet);

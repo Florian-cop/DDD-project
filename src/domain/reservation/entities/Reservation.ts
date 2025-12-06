@@ -67,7 +67,6 @@ export class Reservation extends Entity<IReservationProps> {
     return this._status;
   }
 
-  // Méthodes métier
   public confirm(): void {
     if (!this._status.canBeConfirmed()) {
       throw new Error('Reservation cannot be confirmed in current status');
@@ -125,7 +124,6 @@ export class Reservation extends Entity<IReservationProps> {
     return this._dateRange.isPast();
   }
 
-  // Factory methods
   public static create(
     customerId: string,
     roomIds: string[],

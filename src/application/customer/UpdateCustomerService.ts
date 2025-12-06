@@ -17,7 +17,6 @@ export class UpdateCustomerService {
       throw new Error(`Customer with id "${command.id}" not found`);
     }
 
-    // Vérification de l'unicité de l'email si modifié
     if (command.email && command.email !== existingCustomer.email.value) {
       const emailVO = Email.create(command.email);
       const customerWithEmail = await this.customerRepository.findByEmail(emailVO);
@@ -27,7 +26,6 @@ export class UpdateCustomerService {
       }
     }
 
-    // Créer les Value Objects si les champs sont fournis
     const email = command.email 
       ? Email.create(command.email) 
       : undefined;
@@ -43,7 +41,6 @@ export class UpdateCustomerService {
       ? PhoneNumber.create(command.phoneNumber)
       : undefined;
 
-    // Utiliser la méthode de mutation au lieu de recréer l'entité
     existingCustomer.updateContactInfo(email, name, phoneNumber);
 
     await this.customerRepository.save(existingCustomer);

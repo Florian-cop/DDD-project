@@ -16,7 +16,7 @@ export class CreateRoomService {
     const room = Room.create(
       command.roomNumber,
       command.type,
-      undefined, // accessoires par défaut
+      undefined, 
       command.isAvailable
     );
 

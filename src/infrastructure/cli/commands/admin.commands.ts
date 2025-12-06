@@ -20,7 +20,6 @@ export function registerAdminCommands(program: Command) {
     .command('admin')
     .description('Fonctionnalités administrateur');
 
-  // Room statistics
   admin
     .command('statistics')
     .alias('stats')
@@ -32,15 +31,13 @@ export function registerAdminCommands(program: Command) {
         const stats = await service.execute(query);
 
         displayTitle('📊 Statistiques des Chambres');
-        
-        // Global statistics
+
         displaySubtitle('Vue d\'ensemble');
         console.log(chalk.bold('  Total de chambres:'), chalk.cyan(stats.totalRooms));
         console.log(chalk.bold('  Chambres disponibles:'), chalk.green(stats.availableRooms));
         console.log(chalk.bold('  Chambres occupées:'), chalk.red(stats.occupiedRooms));
         console.log(chalk.bold('  Taux d\'occupation:'), chalk.yellow(`${stats.occupancyRate}%`));
 
-        // Statistics by type
         displaySubtitle('Statistiques par Type');
         stats.byType.forEach(typeStats => {
           console.log(chalk.bold(`\n  ${typeStats.type}:`));
@@ -60,7 +57,6 @@ export function registerAdminCommands(program: Command) {
       }
     });
 
-  // Room reservation history
   admin
     .command('history')
     .description('Afficher l\'historique des réservations pour une chambre')
@@ -68,7 +64,7 @@ export function registerAdminCommands(program: Command) {
     .option('-l, --limit <limit>', 'Nombre maximum de réservations à afficher', '10')
     .action(async (options) => {
       try {
-        // Get room first
+        
         const getRoomService = new GetRoomService(roomRepository);
         const roomQuery = new GetRoomQuery(options.roomId);
         const room = await getRoomService.execute(roomQuery);
@@ -76,21 +72,18 @@ export function registerAdminCommands(program: Command) {
         const service = new GetRoomReservationHistoryService(reservationRepository, roomRepository);
         const query = new GetRoomReservationHistoryQuery(options.roomId);
         const history = await service.execute(query);
-        
-        // Limit results
+
         const limit = parseInt(options.limit);
         const limitedHistory = history.slice(0, limit);
 
         displayTitle(`📜 Historique des Réservations - Chambre ${room.roomNumber.value}`);
-        
-        // Room info
+
         displaySubtitle('Informations de la Chambre');
         console.log(chalk.bold('  Numéro:'), room.roomNumber.value);
         console.log(chalk.bold('  Type:'), room.typeName);
         console.log(chalk.bold('  Prix/nuit:'), `${room.pricePerNight} EUR`);
         console.log(chalk.bold('  Disponible:'), room.isAvailable ? chalk.green('Oui') : chalk.red('Non'));
 
-        // Reservations
         displaySubtitle(`Historique (${limitedHistory.length} réservations)`);
         
         if (limitedHistory.length === 0) {
@@ -120,7 +113,6 @@ export function registerAdminCommands(program: Command) {
       }
     });
 
-  // Dashboard - Combined view
   admin
     .command('dashboard')
     .description('Afficher le tableau de bord administrateur')
@@ -131,14 +123,12 @@ export function registerAdminCommands(program: Command) {
         const stats = await statsService.execute(statsQuery);
 
         displayTitle('🎯 Tableau de Bord Administrateur');
-        
-        // Global stats
+
         displaySubtitle('Vue d\'ensemble');
         console.log(chalk.bold('  Total de chambres:'), chalk.cyan(stats.totalRooms));
         console.log(chalk.bold('  Disponibles:'), chalk.green(`${stats.availableRooms} (${((stats.availableRooms / stats.totalRooms) * 100).toFixed(1)}%)`));
         console.log(chalk.bold('  Occupées:'), chalk.red(`${stats.occupiedRooms} (${stats.occupancyRate}%)`));
 
-        // By type chart
         displaySubtitle('Distribution par Type');
         stats.byType.forEach(typeStats => {
           const bar = '█'.repeat(Math.floor(typeStats.total / 2));
