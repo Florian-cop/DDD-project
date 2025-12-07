@@ -9,7 +9,8 @@ import { UpdateWalletController } from '../controllers/wallet/UpdateWalletContro
 import { DeleteWalletController } from '../controllers/wallet/DeleteWalletController';
 import { getPrismaClient } from '../../db/prisma';
 import { validate } from '../middleware/validate';
-import { updateWalletSchema } from '../validation/schemas';
+import { validateParams } from '../middleware/validateQuery';
+import { updateWalletSchema, customerIdParamSchema } from '../validation/schemas';
 
 export const createWalletRouter = (): Router => {
   const router = Router();
@@ -26,13 +27,13 @@ export const createWalletRouter = (): Router => {
   const updateWalletController = new UpdateWalletController(updateWalletService);
   const deleteWalletController = new DeleteWalletController(deleteWalletService);
 
-  router.get('/wallets/customer/:customerId', (req, res) => getWalletController.handle(req, res));
+  router.get('/wallets/customer/:customerId', validateParams(customerIdParamSchema), (req, res) => getWalletController.handle(req, res));
 
-  router.put('/wallets/customer/:customerId', validate(updateWalletSchema), (req, res) => updateWalletController.handle(req, res));
+  router.put('/wallets/customer/:customerId', validateParams(customerIdParamSchema), validate(updateWalletSchema), (req, res) => updateWalletController.handle(req, res));
 
-  router.patch('/wallets/customer/:customerId', validate(updateWalletSchema), (req, res) => updateWalletController.handle(req, res));
+  router.patch('/wallets/customer/:customerId', validateParams(customerIdParamSchema), validate(updateWalletSchema), (req, res) => updateWalletController.handle(req, res));
 
-  router.delete('/wallets/customer/:customerId', (req, res) => deleteWalletController.handle(req, res));
+  router.delete('/wallets/customer/:customerId', validateParams(customerIdParamSchema), (req, res) => deleteWalletController.handle(req, res));
   
   return router;
 };

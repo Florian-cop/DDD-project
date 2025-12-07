@@ -13,7 +13,8 @@ import { GetCustomerController } from '../controllers/customer/GetCustomerContro
 import { GetAllCustomersController } from '../controllers/customer/GetAllCustomersController';
 import { getPrismaClient } from '../../db/prisma';
 import { validate } from '../middleware/validate';
-import { createCustomerSchema, updateCustomerSchema } from '../validation/schemas';
+import { validateParams } from '../middleware/validateQuery';
+import { createCustomerSchema, updateCustomerSchema, uuidParamSchema } from '../validation/schemas';
 
 export const createCustomerRouter = (): Router => {
   const router = Router();
@@ -38,13 +39,13 @@ export const createCustomerRouter = (): Router => {
 
   router.get('/customers', (req, res) => getAllCustomersController.handle(req, res));
 
-  router.get('/customers/:id', (req, res) => getCustomerController.handle(req, res));
+  router.get('/customers/:id', validateParams(uuidParamSchema), (req, res) => getCustomerController.handle(req, res));
 
-  router.put('/customers/:id', validate(updateCustomerSchema), (req, res) => updateCustomerController.handle(req, res));
+  router.put('/customers/:id', validateParams(uuidParamSchema), validate(updateCustomerSchema), (req, res) => updateCustomerController.handle(req, res));
 
-  router.patch('/customers/:id', validate(updateCustomerSchema), (req, res) => updateCustomerController.handle(req, res));
+  router.patch('/customers/:id', validateParams(uuidParamSchema), validate(updateCustomerSchema), (req, res) => updateCustomerController.handle(req, res));
 
-  router.delete('/customers/:id', (req, res) => deleteCustomerController.handle(req, res));
+  router.delete('/customers/:id', validateParams(uuidParamSchema), (req, res) => deleteCustomerController.handle(req, res));
   
   return router;
 };

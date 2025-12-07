@@ -102,6 +102,31 @@ export const reservationFilterSchema = z.object({
   checkOutDate: z.string().datetime().optional(),
 });
 
+export const uuidParamSchema = z.object({
+  id: z.string().uuid('ID invalide'),
+});
+
+export const customerIdParamSchema = z.object({
+  customerId: z.string().uuid('ID client invalide'),
+});
+
+export const roomIdParamSchema = z.object({
+  roomId: z.string().uuid('ID chambre invalide'),
+});
+
+export const adminStatisticsQuerySchema = z.object({
+  type: z.enum(['STANDARD', 'DELUXE', 'SUITE']).optional(),
+  startDate: z.string().datetime().optional(),
+  endDate: z.string().datetime().optional(),
+});
+
+export const adminHistoryQuerySchema = z.object({
+  limit: z.coerce.number().int().positive().max(100).default(50),
+  status: z.enum(['BOOKED', 'CONFIRMED', 'CANCELLED']).optional(),
+  startDate: z.string().datetime().optional(),
+  endDate: z.string().datetime().optional(),
+});
+
 export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
 export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>;
 export type UpdateWalletInput = z.infer<typeof updateWalletSchema>;
@@ -115,3 +140,8 @@ export type ReleaseRoomInput = z.infer<typeof releaseRoomSchema>;
 export type PaginationInput = z.infer<typeof paginationSchema>;
 export type RoomFilterInput = z.infer<typeof roomFilterSchema>;
 export type ReservationFilterInput = z.infer<typeof reservationFilterSchema>;
+export type UuidParamInput = z.infer<typeof uuidParamSchema>;
+export type CustomerIdParamInput = z.infer<typeof customerIdParamSchema>;
+export type RoomIdParamInput = z.infer<typeof roomIdParamSchema>;
+export type AdminStatisticsQueryInput = z.infer<typeof adminStatisticsQuerySchema>;
+export type AdminHistoryQueryInput = z.infer<typeof adminHistoryQuerySchema>;
