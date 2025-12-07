@@ -17,6 +17,10 @@ export class AdminRoleVO extends ValueObject<IAdminRoleProps> {
     return this.props.role;
   }
 
+  get value(): AdminRole {
+    return this.props.role;
+  }
+
   get label(): string {
     return 'Administrateur';
   }

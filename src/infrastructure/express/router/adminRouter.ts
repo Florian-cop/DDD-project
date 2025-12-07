@@ -1,10 +1,17 @@
 import { Router } from 'express';
 import { RoomRepository } from '../../db/repositories/RoomRepository';
 import { ReservationRepository } from '../../db/repositories/ReservationRepository';
+import { AdminRepository } from '../../db/repositories/AdminRepository';
 import { GetRoomStatisticsService } from '../../../application/statistics/GetRoomStatisticsService';
 import { GetRoomReservationHistoryService } from '../../../application/statistics/GetRoomReservationHistoryService';
+import { GetAllAdminsService } from '../../../application/admin/GetAllAdminsService';
+import { GetAdminService } from '../../../application/admin/GetAdminService';
+import { CreateAdminService } from '../../../application/admin/CreateAdminService';
 import { GetRoomStatisticsController } from '../controllers/admin/GetRoomStatisticsController';
 import { GetRoomReservationHistoryController } from '../controllers/admin/GetRoomReservationHistoryController';
+import { GetAllAdminsController } from '../controllers/admin/GetAllAdminsController';
+import { GetAdminController } from '../controllers/admin/GetAdminController';
+import { CreateAdminController } from '../controllers/admin/CreateAdminController';
 import { getPrismaClient } from '../../db/prisma';
 import { validateParams, validateQuery } from '../middleware/validateQuery';
 import { roomIdParamSchema, adminStatisticsQuerySchema, adminHistoryQuerySchema } from '../validation/schemas';
@@ -15,17 +22,24 @@ export const createAdminRouter = (): Router => {
   
   const roomRepository = new RoomRepository(prisma);
   const reservationRepository = new ReservationRepository(prisma);
+  const adminRepository = new AdminRepository(prisma);
   
   const getRoomStatisticsService = new GetRoomStatisticsService(roomRepository);
   const getRoomReservationHistoryService = new GetRoomReservationHistoryService(
     reservationRepository,
     roomRepository
   );
+  const getAllAdminsService = new GetAllAdminsService(adminRepository);
+  const getAdminService = new GetAdminService(adminRepository);
+  const createAdminService = new CreateAdminService(adminRepository);
   
   const getRoomStatisticsController = new GetRoomStatisticsController(getRoomStatisticsService);
   const getRoomReservationHistoryController = new GetRoomReservationHistoryController(
     getRoomReservationHistoryService
   );
+  const getAllAdminsController = new GetAllAdminsController(getAllAdminsService);
+  const getAdminController = new GetAdminController(getAdminService);
+  const createAdminController = new CreateAdminController(createAdminService);
   
   /**
    * @swagger
@@ -161,6 +175,73 @@ export const createAdminRouter = (): Router => {
    *               $ref: '#/components/schemas/Error'
    */
   router.get('/admin/rooms/:roomId/history', validateParams(roomIdParamSchema), validateQuery(adminHistoryQuerySchema), (req, res) => getRoomReservationHistoryController.handle(req, res));
+  
+  /**
+   * @swagger
+   * /api/admins:
+   *   get:
+   *     summary: Liste tous les administrateurs
+   *     description: Retourne la liste complète des administrateurs
+   *     tags: [Admin]
+   *     responses:
+   *       200:
+   *         description: Liste des administrateurs récupérée avec succès
+   *   post:
+   *     summary: Créer un nouvel administrateur
+   *     description: Créer un nouveau compte administrateur
+   *     tags: [Admin]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - firstname
+   *               - lastname
+   *               - phoneNumber
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 format: email
+   *               firstname:
+   *                 type: string
+   *               lastname:
+   *                 type: string
+   *               phoneNumber:
+   *                 type: string
+   *               role:
+   *                 type: string
+   *                 enum: [ADMIN, SUPER_ADMIN]
+   *     responses:
+   *       201:
+   *         description: Administrateur créé avec succès
+   */
+  router.get('/admins', (req, res) => getAllAdminsController.handle(req, res));
+  router.post('/admins', (req, res) => createAdminController.handle(req, res));
+  
+  /**
+   * @swagger
+   * /api/admins/{adminId}:
+   *   get:
+   *     summary: Récupérer un administrateur par son ID
+   *     description: Retourne les détails d'un administrateur spécifique
+   *     tags: [Admin]
+   *     parameters:
+   *       - in: path
+   *         name: adminId
+   *         required: true
+   *         schema:
+   *           type: string
+   *           format: uuid
+   *     responses:
+   *       200:
+   *         description: Administrateur récupéré avec succès
+   *       404:
+   *         description: Administrateur non trouvé
+   */
+  router.get('/admins/:adminId', (req, res) => getAdminController.handle(req, res));
   
   return router;
 };

@@ -10,27 +10,44 @@ import { ReservationStatusVO } from '@domain/reservation/value-objects/Reservati
 type PrismaReservation = {
   id: string;
   customerId: string;
-  roomId: string;
   checkIn: Date;
   checkOut: Date;
   totalPrice: any;
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  reservationRooms?: {
+    roomId: string;
+  }[];
 };
 
 export class ReservationRepository implements IReservationRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async findAll(): Promise<Reservation[]> {
-    const reservations = await this.prisma.reservation.findMany();
+    const reservations = await this.prisma.reservation.findMany({
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
+      }
+    });
     
     return reservations.map((reservation: PrismaReservation) => this.toDomain(reservation));
   }
 
   async findOneById(id: string): Promise<Reservation | null> {
     const reservation = await this.prisma.reservation.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
+      }
     });
 
     if (!reservation) {
@@ -42,7 +59,14 @@ export class ReservationRepository implements IReservationRepository {
 
   async findByCustomerId(customerId: string): Promise<Reservation[]> {
     const reservations = await this.prisma.reservation.findMany({
-      where: { customerId }
+      where: { customerId },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
+      }
     });
 
     return reservations.map((reservation: PrismaReservation) => this.toDomain(reservation));
@@ -50,7 +74,20 @@ export class ReservationRepository implements IReservationRepository {
 
   async findByRoomId(roomId: string): Promise<Reservation[]> {
     const reservations = await this.prisma.reservation.findMany({
-      where: { roomId }
+      where: {
+        reservationRooms: {
+          some: {
+            roomId: roomId
+          }
+        }
+      },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
+      }
     });
 
     return reservations.map((reservation: PrismaReservation) => this.toDomain(reservation));
@@ -60,7 +97,14 @@ export class ReservationRepository implements IReservationRepository {
     const prismaStatus = this.mapStatusToDb(status);
     
     const reservations = await this.prisma.reservation.findMany({
-      where: { status: prismaStatus as any }
+      where: { status: prismaStatus as any },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
+      }
     });
 
     return reservations.map((reservation: PrismaReservation) => this.toDomain(reservation));
@@ -70,7 +114,14 @@ export class ReservationRepository implements IReservationRepository {
     const reservations = await this.prisma.reservation.findMany({
       where: {
         status: {
-          in: ['PENDING', 'CONFIRMED']
+          in: ['BOOKED', 'CONFIRMED']
+        }
+      },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
         }
       }
     });
@@ -87,7 +138,14 @@ export class ReservationRepository implements IReservationRepository {
           gte: now
         },
         status: {
-          in: ['PENDING', 'CONFIRMED']
+          in: ['BOOKED', 'CONFIRMED']
+        }
+      },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
         }
       }
     });
@@ -112,6 +170,13 @@ export class ReservationRepository implements IReservationRepository {
             }
           }
         ]
+      },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
       }
     });
 
@@ -125,9 +190,13 @@ export class ReservationRepository implements IReservationRepository {
   ): Promise<Reservation[]> {
     const reservations = await this.prisma.reservation.findMany({
       where: {
-        roomId,
+        reservationRooms: {
+          some: {
+            roomId: roomId
+          }
+        },
         status: {
-          in: ['PENDING', 'CONFIRMED']
+          in: ['BOOKED', 'CONFIRMED']
         },
         OR: [
           {
@@ -157,6 +226,13 @@ export class ReservationRepository implements IReservationRepository {
             ]
           }
         ]
+      },
+      include: {
+        reservationRooms: {
+          select: {
+            roomId: true
+          }
+        }
       }
     });
 
@@ -175,23 +251,40 @@ export class ReservationRepository implements IReservationRepository {
     const totalPriceValue = entity.totalPrice.amount;
     const statusDb = this.mapStatusToDb(entity.status.status);
 
-    await this.prisma.reservation.upsert({
-      where: { id: entity.id },
-      create: {
-        id: entity.id,
-        customerId: entity.customerId,
-        roomId: entity.roomIds.value[0],
-        checkIn: entity.checkInDate,
-        checkOut: entity.checkOutDate,
-        totalPrice: totalPriceValue,
-        status: statusDb as any,
-        createdAt: entity.reservationDate
-      },
-      update: {
-        checkIn: entity.checkInDate,
-        checkOut: entity.checkOutDate,
-        totalPrice: totalPriceValue,
-        status: statusDb as any
+    await this.prisma.$transaction(async (tx) => {
+      await tx.reservation.upsert({
+        where: { id: entity.id },
+        create: {
+          id: entity.id,
+          customerId: entity.customerId,
+          checkIn: entity.checkInDate,
+          checkOut: entity.checkOutDate,
+          totalPrice: totalPriceValue,
+          status: statusDb as any,
+          createdAt: entity.reservationDate
+        },
+        update: {
+          checkIn: entity.checkInDate,
+          checkOut: entity.checkOutDate,
+          totalPrice: totalPriceValue,
+          status: statusDb as any
+        }
+      });
+
+      // Delete existing room associations
+      await tx.reservationRoom.deleteMany({
+        where: { reservationId: entity.id }
+      });
+
+      // Create new room associations
+      const roomIds = entity.roomIds.value;
+      if (roomIds.length > 0) {
+        await tx.reservationRoom.createMany({
+          data: roomIds.map(roomId => ({
+            reservationId: entity.id,
+            roomId: roomId
+          }))
+        });
       }
     });
   }
@@ -207,7 +300,8 @@ export class ReservationRepository implements IReservationRepository {
       ? prismaReservation.totalPrice
       : parseFloat(prismaReservation.totalPrice.toString());
 
-    const roomIdsVO = RoomIds.create([prismaReservation.roomId]);
+    const roomIds = prismaReservation.reservationRooms?.map(rr => rr.roomId) || [];
+    const roomIdsVO = RoomIds.create(roomIds);
     const dateRangeVO = DateRange.create(
       prismaReservation.checkIn,
       prismaReservation.checkOut
@@ -230,14 +324,12 @@ export class ReservationRepository implements IReservationRepository {
 
   private mapStatusFromDb(dbStatus: string): ReservationStatusVO {
     switch (dbStatus) {
-      case 'PENDING':
+      case 'BOOKED':
         return ReservationStatusVO.createBooked();
       case 'CONFIRMED':
         return ReservationStatusVO.createConfirmed();
       case 'CANCELLED':
         return ReservationStatusVO.createCancelled();
-      case 'COMPLETED':
-        return ReservationStatusVO.createConfirmed();
       default:
         return ReservationStatusVO.createBooked();
     }
@@ -246,13 +338,13 @@ export class ReservationRepository implements IReservationRepository {
   private mapStatusToDb(status: ReservationStatus): string {
     switch (status) {
       case ReservationStatus.BOOKED:
-        return 'PENDING';
+        return 'BOOKED';
       case ReservationStatus.CONFIRMED:
         return 'CONFIRMED';
       case ReservationStatus.CANCELLED:
         return 'CANCELLED';
       default:
-        return 'PENDING';
+        return 'BOOKED';
     }
   }
 }

@@ -9,7 +9,6 @@ type PrismaRoom = {
   number: string;
   type: string;
   isAvailable: boolean;
-  hotelId: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -86,8 +85,7 @@ export class RoomRepository implements IRoomRepository {
         id: entity.id,
         number: entity.roomNumber.value,
         type: typeDb as any,
-        isAvailable: entity.isAvailable,
-        hotelId: 'default-hotel-id'
+        isAvailable: entity.isAvailable
       },
       update: {
         number: entity.roomNumber.value,

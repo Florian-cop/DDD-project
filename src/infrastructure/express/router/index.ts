@@ -3,6 +3,7 @@ import { createCustomerRouter } from './customerRouter';
 import { createWalletRouter } from './walletRouter';
 import { createRoomRouter } from './roomRouter';
 import { createAdminRouter } from './adminRouter';
+import { createReservationRouter } from './reservationRouter';
 
 export const createApiRouter = (): Router => {
   const apiRouter = Router();
@@ -11,6 +12,7 @@ export const createApiRouter = (): Router => {
   apiRouter.use('/api', createWalletRouter());
   apiRouter.use('/api', createRoomRouter());
   apiRouter.use('/api', createAdminRouter());
+  apiRouter.use('/api', createReservationRouter());
 
   apiRouter.get('/health', async (req, res) => {
     try {

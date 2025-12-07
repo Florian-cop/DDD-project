@@ -34,21 +34,6 @@ model Wallet {
   @@map("wallets")
 }
 
-model Hotel {
-  id          String   @id @default(uuid())
-  name        String
-  address     String
-  city        String
-  country     String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  rooms Room[]
-
-  @@map("hotels")
-}
-
 enum RoomType {
   STANDARD
   DELUXE
@@ -60,38 +45,47 @@ model Room {
   number      String   @unique
   type        RoomType
   isAvailable Boolean  @default(true)
-  hotelId     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  hotel        Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
+  reservationRooms ReservationRoom[]
 
   @@map("rooms")
 }
 
 enum ReservationStatus {
-  PENDING
+  BOOKED
   CONFIRMED
   CANCELLED
-  COMPLETED
 }
 
 model Reservation {
   id         String            @id @default(uuid())
   customerId String
-  roomId     String
   checkIn    DateTime
   checkOut   DateTime
   totalPrice Decimal           @db.Decimal(10, 2)
-  status     ReservationStatus @default(PENDING)
+  status     ReservationStatus @default(BOOKED)
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
 
-  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  room     Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  customer         Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  reservationRooms ReservationRoom[]
 
   @@map("reservations")
+}
+
+model ReservationRoom {
+  id            String   @id @default(uuid())
+  reservationId String
+  roomId        String
+  createdAt     DateTime @default(now())
+
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  room        Room        @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([reservationId, roomId])
+  @@map("reservation_rooms")
 }
 
 model Admin {
