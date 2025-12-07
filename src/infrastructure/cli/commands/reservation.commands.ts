@@ -43,7 +43,8 @@ export function registerReservationCommands(program: Command) {
 
         const service = new CreateReservationService(
           reservationRepository,
-          walletRepository
+          walletRepository,
+          prisma
         );
 
         const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
@@ -82,7 +83,8 @@ export function registerReservationCommands(program: Command) {
       try {
         const service = new ConfirmReservationService(
           reservationRepository,
-          walletRepository
+          walletRepository,
+          prisma
         );
         
         await service.execute({

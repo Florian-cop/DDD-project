@@ -22,7 +22,7 @@ export const createCustomerRouter = (): Router => {
   const customerRepository = new CustomerRepository(prisma);
   const walletRepository = new WalletRepository(prisma);
   
-  const createCustomerService = new CreateCustomerService(customerRepository, walletRepository);
+  const createCustomerService = new CreateCustomerService(customerRepository, walletRepository, prisma);
   const updateCustomerService = new UpdateCustomerService(customerRepository);
   const deleteCustomerService = new DeleteCustomerService(customerRepository);
   const getCustomerService = new GetCustomerService(customerRepository);

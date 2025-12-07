@@ -29,7 +29,7 @@ export function registerCustomerCommands(program: Command) {
     .requiredOption('-p, --phone <phone>', 'Numéro de téléphone')
     .action(async (options) => {
       try {
-        const service = new CreateCustomerService(customerRepository, walletRepository);
+        const service = new CreateCustomerService(customerRepository, walletRepository, prisma);
         const command = {
           email: options.email,
           firstname: options.firstname,
