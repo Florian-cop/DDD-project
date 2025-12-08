@@ -2,7 +2,7 @@ import { Entity } from '../../../core/Entity';
 import { DateRange } from '../value-objects/DateRange';
 import { RoomIds } from '../value-objects/RoomIds';
 import { TotalPrice } from '../value-objects/TotalPrice';
-import { ReservationStatusVO, ReservationStatus } from '../value-objects/ReservationStatus';
+import { ReservationStatus } from '../value-objects/ReservationStatus';
 
 export interface IReservationProps {
   customerId: string;
@@ -10,7 +10,7 @@ export interface IReservationProps {
   dateRange: DateRange;
   totalPrice: TotalPrice;
   reservationDate: Date;
-  status: ReservationStatusVO;
+  status: ReservationStatus;
 }
 
 export class Reservation extends Entity<IReservationProps> {
@@ -19,7 +19,7 @@ export class Reservation extends Entity<IReservationProps> {
   private _dateRange: DateRange;
   private _totalPrice: TotalPrice;
   private _reservationDate: Date;
-  private _status: ReservationStatusVO;
+  private _status: ReservationStatus;
 
   private constructor(props: IReservationProps, id?: string) {
     super(id);
@@ -63,50 +63,22 @@ export class Reservation extends Entity<IReservationProps> {
     return this._reservationDate;
   }
 
-  get status(): ReservationStatusVO {
+  get status(): ReservationStatus {
     return this._status;
   }
 
-  // Méthodes métier
   public confirm(): void {
     if (!this._status.canBeConfirmed()) {
       throw new Error('Reservation cannot be confirmed in current status');
     }
-    this._status = ReservationStatusVO.createConfirmed();
+    this._status = ReservationStatus.createConfirmed();
   }
 
   public cancel(): void {
     if (!this._status.canBeCancelled()) {
       throw new Error('Reservation cannot be cancelled in current status');
     }
-    this._status = ReservationStatusVO.createCancelled();
-  }
-
-  public addRoom(roomId: string): void {
-    this._roomIds = this._roomIds.addRoom(roomId);
-  }
-
-  public removeRoom(roomId: string): void {
-    this._roomIds = this._roomIds.removeRoom(roomId);
-  }
-
-  public updateTotalPrice(newPrice: TotalPrice): void {
-    if (this._status.isCancelled()) {
-      throw new Error('Cannot update price of cancelled reservation');
-    }
-    this._totalPrice = newPrice;
-  }
-
-  public changeDates(newCheckInDate: Date, newCheckOutDate: Date): void {
-    if (this._status.isCancelled()) {
-      throw new Error('Cannot change dates of cancelled reservation');
-    }
-
-    if (this._status.isConfirmed()) {
-      throw new Error('Cannot change dates of confirmed reservation. Please cancel and create a new reservation.');
-    }
-
-    this._dateRange = DateRange.create(newCheckInDate, newCheckOutDate);
+    this._status = ReservationStatus.createCancelled();
   }
 
   public isActive(): boolean {
@@ -125,7 +97,6 @@ export class Reservation extends Entity<IReservationProps> {
     return this._dateRange.isPast();
   }
 
-  // Factory methods
   public static create(
     customerId: string,
     roomIds: string[],
@@ -142,7 +113,7 @@ export class Reservation extends Entity<IReservationProps> {
     const roomIdsVO = RoomIds.create(roomIds);
     const dateRangeVO = DateRange.create(checkInDate, checkOutDate);
     const totalPriceVO = TotalPrice.create(totalPrice, currency);
-    const statusVO = ReservationStatusVO.createBooked();
+    const statusVO = ReservationStatus.createBooked();
 
     return new Reservation(
       {

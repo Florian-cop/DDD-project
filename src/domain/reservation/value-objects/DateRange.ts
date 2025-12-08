@@ -24,12 +24,11 @@ export class DateRange extends ValueObject<IDateRangeProps> {
   }
 
   public static create(checkInDate: Date, checkOutDate: Date): DateRange {
-    // Validation : checkInDate doit être avant checkOutDate
+    
     if (checkInDate >= checkOutDate) {
       throw new Error('Check-in date must be before check-out date');
     }
 
-    // Validation : checkInDate ne peut pas être dans le passé
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
@@ -40,7 +39,6 @@ export class DateRange extends ValueObject<IDateRangeProps> {
       throw new Error('Check-in date cannot be in the past');
     }
 
-    // Validation : durée minimum 1 nuit
     const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
     const nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
     
@@ -48,7 +46,6 @@ export class DateRange extends ValueObject<IDateRangeProps> {
       throw new Error('Reservation must be at least 1 night');
     }
 
-    // Validation : durée maximum 30 nuits
     if (nights > 30) {
       throw new Error('Reservation cannot exceed 30 nights');
     }
@@ -81,5 +78,13 @@ export class DateRange extends ValueObject<IDateRangeProps> {
   public isCurrent(): boolean {
     const now = new Date();
     return this.props.checkInDate <= now && this.props.checkOutDate > now;
+  }
+
+  public equals(other?: DateRange): boolean {
+    if (!other || !(other instanceof DateRange)) {
+      return false;
+    }
+    return this.props.checkInDate.getTime() === other.props.checkInDate.getTime() &&
+           this.props.checkOutDate.getTime() === other.props.checkOutDate.getTime();
   }
 }

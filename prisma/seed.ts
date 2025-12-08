@@ -3,9 +3,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.reservationRoom.deleteMany();
   await prisma.reservation.deleteMany();
   await prisma.room.deleteMany();
-  await prisma.hotel.deleteMany();
   await prisma.wallet.deleteMany();
   await prisma.customer.deleteMany();
   await prisma.admin.deleteMany();
@@ -58,104 +58,109 @@ async function main() {
         email: 'admin@hotel.com',
         firstname: 'Admin',
         lastname: 'System',
-        role: 'SUPER_ADMIN',
+        phoneNumber: '0600000000',
+        role: 'ADMIN',
       },
     }),
   ]);
-  const hotels = await Promise.all([
-    prisma.hotel.create({
-      data: {
-        name: 'Grand Hotel Paris',
-        address: '123 Avenue des Champs-Élysées',
-        city: 'Paris',
-        country: 'France',
-        description: 'Hôtel de luxe au cœur de Paris',
-      },
-    }),
-    prisma.hotel.create({
-      data: {
-        name: 'Hotel Riviera',
-        address: '45 Promenade des Anglais',
-        city: 'Nice',
-        country: 'France',
-        description: 'Vue magnifique sur la Méditerranée',
-      },
-    }),
-  ]);
+
+  // XYZ Hotel - Chambres
   const rooms = await Promise.all([
     prisma.room.create({
       data: {
         number: '101',
         type: 'STANDARD',
-        pricePerDay: 150.00,
-        capacity: 2,
-        description: 'Chambre standard avec vue sur la ville',
-        hotelId: hotels[0].id,
+        isAvailable: true,
+      },
+    }),
+    prisma.room.create({
+      data: {
+        number: '102',
+        type: 'STANDARD',
+        isAvailable: true,
+      },
+    }),
+    prisma.room.create({
+      data: {
+        number: '103',
+        type: 'STANDARD',
+        isAvailable: false,
       },
     }),
     prisma.room.create({
       data: {
         number: '201',
         type: 'DELUXE',
-        pricePerDay: 250.00,
-        capacity: 2,
-        description: 'Chambre deluxe avec balcon',
-        hotelId: hotels[0].id,
-      },
-    }),
-    prisma.room.create({
-      data: {
-        number: '301',
-        type: 'SUITE',
-        pricePerDay: 450.00,
-        capacity: 4,
-        description: 'Suite luxueuse avec salon',
-        hotelId: hotels[0].id,
-      },
-    }),
-    prisma.room.create({
-      data: {
-        number: '101',
-        type: 'STANDARD',
-        pricePerDay: 120.00,
-        capacity: 2,
-        description: 'Chambre avec vue sur la mer',
-        hotelId: hotels[1].id,
+        isAvailable: true,
       },
     }),
     prisma.room.create({
       data: {
         number: '202',
         type: 'DELUXE',
-        pricePerDay: 200.00,
-        capacity: 3,
-        description: 'Chambre deluxe vue mer panoramique',
-        hotelId: hotels[1].id,
+        isAvailable: true,
+      },
+    }),
+    prisma.room.create({
+      data: {
+        number: '301',
+        type: 'SUITE',
+        isAvailable: true,
+      },
+    }),
+    prisma.room.create({
+      data: {
+        number: '302',
+        type: 'SUITE',
+        isAvailable: false,
       },
     }),
   ]);
-  const reservations = await Promise.all([
-    prisma.reservation.create({
+
+  // Créer des réservations
+  const reservation1 = await prisma.reservation.create({
+    data: {
+      customerId: customers[0].id,
+      checkIn: new Date('2025-12-01'),
+      checkOut: new Date('2025-12-05'),
+      totalPrice: 200.00,
+      status: 'BOOKED',
+    },
+  });
+
+  // Associer les chambres à la réservation
+  await prisma.reservationRoom.create({
+    data: {
+      reservationId: reservation1.id,
+      roomId: rooms[2].id, // Room 103
+    },
+  });
+
+  const reservation2 = await prisma.reservation.create({
+    data: {
+      customerId: customers[1].id,
+      checkIn: new Date('2025-12-10'),
+      checkOut: new Date('2025-12-15'),
+      totalPrice: 1000.00,
+      status: 'CONFIRMED',
+    },
+  });
+
+  // Associer plusieurs chambres à la réservation
+  await Promise.all([
+    prisma.reservationRoom.create({
       data: {
-        customerId: customers[0].id,
-        roomId: rooms[0].id,
-        checkIn: new Date('2025-12-01'),
-        checkOut: new Date('2025-12-05'),
-        totalPrice: 600.00,
-        status: 'CONFIRMED',
-      },
-    }),
-    prisma.reservation.create({
-      data: {
-        customerId: customers[1].id,
-        roomId: rooms[3].id,
-        checkIn: new Date('2025-12-10'),
-        checkOut: new Date('2025-12-15'),
-        totalPrice: 600.00,
-        status: 'PENDING',
+        reservationId: reservation2.id,
+        roomId: rooms[6].id, // Suite 302
       },
     }),
   ]);
+
+  console.log('✅ Database seeded successfully!');
+  console.log(`📊 Created ${customers.length} customers`);
+  console.log(`👤 Created ${admins.length} admins`);
+  console.log(`🏨 Created ${rooms.length} rooms`);
+  console.log(`📅 Created 2 reservations`);
 }
 
 main()

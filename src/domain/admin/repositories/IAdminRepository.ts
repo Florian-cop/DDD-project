@@ -1,11 +1,8 @@
-import { IRepository } from '../../../core/IRepository';
+import { IRepository } from '@core/IRepository';
 import { Admin } from '../entities/Admin';
-import { AdminRole } from '../value-objects/AdminRole';
+import { Email } from '@domain/customer/value-objects/Email';
 
 export interface IAdminRepository extends IRepository<Admin> {
-  findByCustomerId(customerId: string): Promise<Admin | null>;
-  findByHotelId(hotelId: string): Promise<Admin[]>;
-  findByRole(role: AdminRole): Promise<Admin[]>;
+  findByEmail(email: Email): Promise<Admin | null>;
   findActiveAdmins(): Promise<Admin[]>;
-  findSuperAdmins(): Promise<Admin[]>;
 }

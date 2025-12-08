@@ -1,0 +1,73 @@
+meta {
+  name: Add Funds - Wallet
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/api/wallets/customer/{{customerId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "amount": 100,
+    "currency": "EUR"
+  }
+}
+
+vars:pre-request {
+  customerId: 550e8400-e29b-41d4-a716-446655440000
+}
+
+docs {
+  # Ajouter des fonds au portefeuille
+  
+  Ajoute des fonds dans le wallet d'un client. Conversion automatique en EUR.
+  
+  ## Variables
+  - `customerId` : L'ID du client propriétaire du wallet
+  
+  ## Body requis
+  ```json
+  {
+    "amount": 100,
+    "currency": "EUR"
+  }
+  ```
+  
+  ## Devises supportées
+  - **EUR** : Euro (pas de conversion)
+  - **USD** : Dollar américain (taux: 0.92)
+  - **GBP** : Livre sterling (taux: 1.17)
+  - **JPY** : Yen japonais (taux: 0.0064)
+  - **CHF** : Franc suisse (taux: 1.05)
+  
+  ## Exemple de conversion
+  ```json
+  {
+    "amount": 100,
+    "currency": "USD"
+  }
+  ```
+  → 100 USD × 0.92 = 92 EUR ajoutés au wallet
+  
+  ## Réponse 200
+  ```json
+  {
+    "id": "wallet-uuid",
+    "customerId": "550e8400-e29b-41d4-a716-446655440000",
+    "balance": 192.00
+  }
+  ```
+  
+  ## Erreurs possibles
+  - **400** : Montant négatif ou zéro
+  - **400** : Devise non supportée
+  - **404** : Wallet ou client non trouvé
+}

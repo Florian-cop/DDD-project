@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { DeleteCustomerService } from '../../../../application/customer/delete/DeleteCustomerService';
-import { DeleteCustomerCommand } from '../../../../application/customer/delete/DeleteCustomerCommand';
+import { DeleteCustomerService } from '../../../../application/customer/DeleteCustomerService';
+import { DeleteCustomerCommand } from '../../../../application/customer/DeleteCustomerCommand';
 
 export class DeleteCustomerController {
   constructor(private readonly deleteCustomerService: DeleteCustomerService) {}

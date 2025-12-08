@@ -1,4 +1,4 @@
-import { IRoomRepository, Room, RoomNumber } from '../../../domain/room';
+import { IRoomRepository, Room, RoomNumber } from '@domain/room';
 import { CreateRoomCommand } from './CreateRoomCommand';
 
 export class CreateRoomService {
@@ -16,7 +16,7 @@ export class CreateRoomService {
     const room = Room.create(
       command.roomNumber,
       command.type,
-      undefined, // accessoires par défaut
+      undefined, 
       command.isAvailable
     );
 

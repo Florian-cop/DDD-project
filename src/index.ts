@@ -8,15 +8,15 @@ export {
   ICustomerRepository
 } from './domain/customer';
 
-export { CreateCustomerCommand } from './application/customer/create/CreateCustomerCommand';
-export { CreateCustomerService } from './application/customer/create/CreateCustomerService';
-export { UpdateCustomerCommand } from './application/customer/update/UpdateCustomerCommand';
-export { UpdateCustomerService } from './application/customer/update/UpdateCustomerService';
-export { DeleteCustomerCommand } from './application/customer/delete/DeleteCustomerCommand';
-export { DeleteCustomerService } from './application/customer/delete/DeleteCustomerService';
-export { GetCustomerQuery } from './application/customer/get/GetCustomerQuery';
-export { GetCustomerService } from './application/customer/get/GetCustomerService';
-export { GetAllCustomersService } from './application/customer/list/GetAllCustomersService';
+export { CreateCustomerCommand } from './application/customer/CreateCustomerCommand';
+export { CreateCustomerService } from './application/customer/CreateCustomerService';
+export { UpdateCustomerCommand } from './application/customer/UpdateCustomerCommand';
+export { UpdateCustomerService } from './application/customer/UpdateCustomerService';
+export { DeleteCustomerCommand } from './application/customer/DeleteCustomerCommand';
+export { DeleteCustomerService } from './application/customer/DeleteCustomerService';
+export { GetCustomerQuery } from './application/customer/GetCustomerQuery';
+export { GetCustomerService } from './application/customer/GetCustomerService';
+export { GetAllCustomersService } from './application/customer/GetAllCustomersService';
 
 export { CustomerRepository } from './infrastructure/db/repositories/CustomerRepository';
 export { CreateCustomerController } from './infrastructure/express/controllers/customer/CreateCustomerController';

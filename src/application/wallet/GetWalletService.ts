@@ -1,6 +1,6 @@
-import { Wallet } from '../../domain/wallet/entities/Wallet';
-import { IWalletRepository } from '../../domain/wallet/repositories/IWalletRepository';
-import { ICustomerRepository } from '../../domain/customer/repositories/ICustomerRepository';
+import { Wallet } from '@domain/wallet';
+import { IWalletRepository } from '@domain/wallet';
+import { ICustomerRepository } from '@domain/customer/repositories/ICustomerRepository';
 import { GetWalletQuery } from './GetWalletQuery';
 
 export class GetWalletService {

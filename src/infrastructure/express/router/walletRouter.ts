@@ -2,12 +2,13 @@ import { Router } from 'express';
 import { WalletRepository } from '../../db/repositories/WalletRepository';
 import { CustomerRepository } from '../../db/repositories/CustomerRepository';
 import { GetWalletService } from '../../../application/wallet/GetWalletService';
-import { UpdateWalletService } from '../../../application/wallet/UpdateWalletService';
-import { DeleteWalletService } from '../../../application/wallet/DeleteWalletService';
+import { AddFundsToWalletService } from '../../../application/wallet/AddFundsToWalletService';
 import { GetWalletController } from '../controllers/wallet/GetWalletController';
-import { UpdateWalletController } from '../controllers/wallet/UpdateWalletController';
-import { DeleteWalletController } from '../controllers/wallet/DeleteWalletController';
+import { AddFundsToWalletController } from '../controllers/wallet/AddFundsToWalletController';
 import { getPrismaClient } from '../../db/prisma';
+import { validate } from '../middleware/validate';
+import { validateParams } from '../middleware/validateQuery';
+import { addFundsToWalletSchema, customerIdParamSchema } from '../validation/schemas';
 
 export const createWalletRouter = (): Router => {
   const router = Router();
@@ -17,17 +18,16 @@ export const createWalletRouter = (): Router => {
   const customerRepository = new CustomerRepository(prisma);
   
   const getWalletService = new GetWalletService(walletRepository, customerRepository);
-  const updateWalletService = new UpdateWalletService(walletRepository, customerRepository);
-  const deleteWalletService = new DeleteWalletService(walletRepository, customerRepository);
+  const addFundsToWalletService = new AddFundsToWalletService(walletRepository, customerRepository);
   
   const getWalletController = new GetWalletController(getWalletService);
-  const updateWalletController = new UpdateWalletController(updateWalletService);
-  const deleteWalletController = new DeleteWalletController(deleteWalletService);
-  
-  router.get('/wallets/customer/:customerId', (req, res) => getWalletController.handle(req, res));
-  router.put('/wallets/customer/:customerId', (req, res) => updateWalletController.handle(req, res));
-  router.patch('/wallets/customer/:customerId', (req, res) => updateWalletController.handle(req, res));
-  router.delete('/wallets/customer/:customerId', (req, res) => deleteWalletController.handle(req, res));
+  const addFundsToWalletController = new AddFundsToWalletController(addFundsToWalletService);
+
+  router.get('/wallets/customer/:customerId', validateParams(customerIdParamSchema), (req, res) => getWalletController.handle(req, res));
+
+  router.put('/wallets/customer/:customerId', validateParams(customerIdParamSchema), validate(addFundsToWalletSchema), (req, res) => addFundsToWalletController.handle(req, res));
+
+  router.patch('/wallets/customer/:customerId', validateParams(customerIdParamSchema), validate(addFundsToWalletSchema), (req, res) => addFundsToWalletController.handle(req, res));
   
   return router;
 };

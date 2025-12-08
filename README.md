@@ -1,50 +1,50 @@
-Terme utiliser en Ubiquitous language
-Un User est une personne qui est présent sur la plateforme sans être connecté
-Un Customer est un User qui a créer un compte et qui peut faire des réservations
-Un Admin est un Customer qui a des droits supplémentaires pour gérer la plateforme
-Un Wallet est un porte-monnaie virtuel lié à un Customer
-Une Room est une chambre d'hôtel
-Une Reservation est une réservation faite par un Customer pour une ou plusieurs Room
-Un Type de Room est une catégorie de chambre d'hôtel (standard room, deluxe room, suite)
+# Système de Réservation Hôtelière
+
+Système de gestion de réservations hôtelières construit avec une architecture Domain-Driven Design (DDD).
+
+## Architecture
+
+Le projet suit une architecture en couches stricte :
+
+- **Domain Layer** : Entités, Value Objects, Repositories (interfaces)
+- **Application Layer** : Services applicatifs, Commands, Queries
+- **Infrastructure Layer** : Implémentations concrètes (Prisma, Express, CLI)
+
+### Bounded Contexts
+
+- Customer : Gestion des clients et de leurs informations
+- Wallet : Gestion des portefeuilles virtuels et paiements
+- Room : Gestion de l'inventaire des chambres
+- Reservation : Gestion du cycle de vie des réservations
+- Admin : Administration de la plateforme
 
 
-Customer
-    - firstName
-    - lastName
-    - email (UNIQUE)
-    - phoneNumber
-    - id
-Wallet
-    -  balance
-    -  currency
+## Ubiquitous Language
 
+### Entités Principales
 
-Currencies : Euro Dollar Livre Sterling Yen Franc Suisse
-conversion
+**Customer**
+Client enregistré sur la plateforme pouvant effectuer des réservations.
+- Propriétés : firstName, lastName, email (unique), phoneNumber
+- Relations : 1 Wallet, N Reservations
 
-Room : standard room | deluxe room | suite
-    - roomNumber (UNIQUE)
-    - type
-    - pricePerNight
-    - isAvailable
-    - bed
-    - duoBed
-    - wifi
-    - tv | flatScreenTv
-    - minibar
-    - airConditioning
-    - bathtub
-    - terrace
+**Wallet**
+Porte-monnaie virtuel lié à un Customer pour gérer les paiements.
+- Propriétés : balance, currency
+- Devises supportées : EUR, USD, GBP, JPY, CHF
+- Conversion automatique en EUR
 
-Reservation
-    - id (UNIQUE)
-    - idRoom[]
-    - checkInDate
-    - checkOutDate
-    - totalPrice
-    - reservationDate
-    - numberOfNights
-    - status (booked | confirmed | cancelled)
+**Room**
+Chambre d'hôtel avec caractéristiques et disponibilité.
+- Types : STANDARD, DELUXE, SUITE
+- Propriétés : roomNumber (unique), type, pricePerNight, isAvailable
+- Accessoires : bed, wifi, tv/flatScreenTv, minibar, airConditioning, bathtub, terrace
 
-Admin
-    - 
+**Reservation**
+Réservation effectuée par un Customer pour une ou plusieurs Room.
+- Propriétés : checkInDate, checkOutDate, totalPrice, reservationDate
+- Statuts : BOOKED, CONFIRMED, CANCELLED
+- Relations : 1 Customer, N Rooms
+
+**Admin**
+Customer avec droits étendus pour administrer la plateforme.

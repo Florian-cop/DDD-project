@@ -1,32 +1,28 @@
-import { IAdminRepository, Admin } from '../../../domain/admin';
-import { ICustomerRepository } from '../../../domain/customer';
+import { IAdminRepository } from '@domain/admin/repositories/IAdminRepository';
+import { Admin } from '@domain/admin/entities/Admin';
 import { CreateAdminCommand } from './CreateAdminCommand';
+import { AdminRole } from '@domain/admin/value-objects/AdminRole';
+import { Email } from '@domain/customer/value-objects/Email';
 
 export class CreateAdminService {
-  constructor(
-    private readonly adminRepository: IAdminRepository,
-    private readonly customerRepository: ICustomerRepository
-  ) {}
+  constructor(private readonly adminRepository: IAdminRepository) {}
 
   async execute(command: CreateAdminCommand): Promise<Admin> {
-    // Vérifier que le customer existe
-    const customer = await this.customerRepository.findOneById(command.customerId);
-    
-    if (!customer) {
-      throw new Error(`Customer with id "${command.customerId}" not found`);
+    const emailVO = Email.create(command.email);
+    const existingAdmin = await this.adminRepository.findByEmail(emailVO);
+
+    if (existingAdmin) {
+      throw new Error(`Admin with email "${command.email}" already exists`);
     }
 
-    // Vérifier qu'il n'est pas déjà admin
-    const existingAdmin = await this.adminRepository.findByCustomerId(command.customerId);
-    
-    if (existingAdmin) {
-      throw new Error(`Customer with id "${command.customerId}" is already an admin`);
-    }
+    const role = (command.role as AdminRole) || AdminRole.ADMIN;
 
     const admin = Admin.create(
-      command.customerId,
-      command.role,
-      command.hotelId
+      command.email,
+      command.firstname,
+      command.lastname,
+      command.phoneNumber,
+      role
     );
 
     await this.adminRepository.save(admin);

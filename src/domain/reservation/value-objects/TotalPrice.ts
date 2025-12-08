@@ -22,6 +22,10 @@ export class TotalPrice extends ValueObject<ITotalPriceProps> {
     return `${this.props.amount.toFixed(2)} ${this.props.currency}`;
   }
 
+  public format(): string {
+    return this.formattedAmount;
+  }
+
   public static create(amount: number, currency: string = 'EUR'): TotalPrice {
     if (amount < 0) {
       throw new Error('Total price cannot be negative');
@@ -31,13 +35,11 @@ export class TotalPrice extends ValueObject<ITotalPriceProps> {
       throw new Error('Total price cannot be zero');
     }
 
-    // Validation de la devise
     const validCurrencies = ['EUR', 'USD', 'GBP', 'JPY', 'CHF'];
     if (!validCurrencies.includes(currency.toUpperCase())) {
       throw new Error(`Invalid currency: ${currency}. Valid currencies: ${validCurrencies.join(', ')}`);
     }
 
-    // Arrondir à 2 décimales
     const roundedAmount = Math.round(amount * 100) / 100;
 
     return new TotalPrice({ 

@@ -31,15 +31,12 @@ export class RoomAccessories extends ValueObject<IRoomAccessoriesProps> {
       throw new Error('Room must have at least one accessory');
     }
 
-    // Enlever les doublons
     const uniqueAccessories = Array.from(new Set(accessories));
 
-    // Validation : pas de bed ET duoBed en même temps
     if (uniqueAccessories.includes('bed') && uniqueAccessories.includes('duoBed')) {
       throw new Error('Room cannot have both bed and duoBed');
     }
 
-    // Validation : pas de tv ET flatScreenTv en même temps
     if (uniqueAccessories.includes('tv') && uniqueAccessories.includes('flatScreenTv')) {
       throw new Error('Room cannot have both tv and flatScreenTv');
     }
@@ -49,7 +46,7 @@ export class RoomAccessories extends ValueObject<IRoomAccessoriesProps> {
 
   public addAccessory(accessory: RoomAccessory): RoomAccessories {
     if (this.has(accessory)) {
-      return this; // Déjà présent
+      return this; 
     }
 
     const newAccessories = [...this.props.accessories, accessory];
