@@ -44,19 +44,15 @@ export function registerReservationCommands(program: Command) {
         const service = new CreateReservationService(
           reservationRepository,
           walletRepository,
+          roomRepository,
           prisma
         );
-
-        const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
-
-        const totalPrice = roomIds.length * nights * 50;
         
         const command = {
           customerId: options.customerId,
           roomIds,
           checkInDate: checkIn,
           checkOutDate: checkOut,
-          totalPrice,
           currency: options.currency.toUpperCase(),
         };
 

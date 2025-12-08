@@ -19,8 +19,6 @@ export const addFundsToWalletSchema = z.object({
   currency: z.enum(['EUR', 'USD', 'GBP', 'JPY', 'CHF']),
 });
 
-export const updateWalletSchema = addFundsToWalletSchema;
-
 export const createRoomSchema = z.object({
   roomNumber: z.string().min(1, 'Le numéro de chambre est requis'),
   type: z.enum(['STANDARD', 'DELUXE', 'SUITE']),
@@ -38,7 +36,6 @@ export const createReservationSchema = z.object({
   roomIds: z.array(z.string().uuid('ID chambre invalide')).min(1, 'Au moins une chambre requise'),
   checkInDate: z.string().datetime('Date de check-in invalide'),
   checkOutDate: z.string().datetime('Date de check-out invalide'),
-  totalPrice: z.number().positive('Le prix total doit être positif'),
   currency: z.enum(['EUR', 'USD', 'GBP', 'JPY', 'CHF']).default('EUR'),
 }).refine(
   (data) => new Date(data.checkOutDate) > new Date(data.checkInDate),
@@ -118,7 +115,6 @@ export const adminHistoryQuerySchema = z.object({
 export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
 export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>;
 export type AddFundsToWalletInput = z.infer<typeof addFundsToWalletSchema>;
-export type UpdateWalletInput = z.infer<typeof updateWalletSchema>;
 export type CreateRoomInput = z.infer<typeof createRoomSchema>;
 export type UpdateRoomInput = z.infer<typeof updateRoomSchema>;
 export type CreateReservationInput = z.infer<typeof createReservationSchema>;

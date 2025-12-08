@@ -248,7 +248,7 @@ export class ReservationRepository implements IReservationRepository {
 
   async save(entity: Reservation): Promise<void> {
     const totalPriceValue = entity.totalPrice.amount;
-    const statusDb = this.mapStatusToDb(entity.status.status);
+    const statusDb = this.mapStatusToDb(entity.status);
 
     await this.prisma.$transaction(async (tx) => {
       await tx.reservation.upsert({

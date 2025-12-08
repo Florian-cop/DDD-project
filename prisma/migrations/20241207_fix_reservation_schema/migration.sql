@@ -1,7 +1,5 @@
 -- AlterEnum
 -- Change ReservationStatus enum values from PENDING/COMPLETED to BOOKED
-BEGIN;
-
 -- Create new enum type
 CREATE TYPE "ReservationStatus_new" AS ENUM ('BOOKED', 'CONFIRMED', 'CANCELLED');
 
@@ -19,8 +17,6 @@ ALTER TABLE "reservations"
 -- Drop old enum and rename new one
 DROP TYPE "ReservationStatus";
 ALTER TYPE "ReservationStatus_new" RENAME TO "ReservationStatus";
-
-COMMIT;
 
 -- CreateTable
 -- Create reservation_rooms junction table for many-to-many relationship

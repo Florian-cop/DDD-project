@@ -21,7 +21,7 @@ export const createReservationRouter = (): Router => {
   const walletRepository = new WalletRepository(prisma);
   const roomRepository = new RoomRepository(prisma);
   
-  const createReservationService = new CreateReservationService(reservationRepository, walletRepository, prisma);
+  const createReservationService = new CreateReservationService(reservationRepository, walletRepository, roomRepository, prisma);
   const confirmReservationService = new ConfirmReservationService(reservationRepository, walletRepository, roomRepository, prisma);
   const cancelReservationService = new CancelReservationService(reservationRepository, roomRepository, prisma);
   

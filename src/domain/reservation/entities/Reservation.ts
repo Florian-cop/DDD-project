@@ -81,33 +81,6 @@ export class Reservation extends Entity<IReservationProps> {
     this._status = ReservationStatus.createCancelled();
   }
 
-  public addRoom(roomId: string): void {
-    this._roomIds = this._roomIds.addRoom(roomId);
-  }
-
-  public removeRoom(roomId: string): void {
-    this._roomIds = this._roomIds.removeRoom(roomId);
-  }
-
-  public updateTotalPrice(newPrice: TotalPrice): void {
-    if (this._status.isCancelled()) {
-      throw new Error('Cannot update price of cancelled reservation');
-    }
-    this._totalPrice = newPrice;
-  }
-
-  public changeDates(newCheckInDate: Date, newCheckOutDate: Date): void {
-    if (this._status.isCancelled()) {
-      throw new Error('Cannot change dates of cancelled reservation');
-    }
-
-    if (this._status.isConfirmed()) {
-      throw new Error('Cannot change dates of confirmed reservation. Please cancel and create a new reservation.');
-    }
-
-    this._dateRange = DateRange.create(newCheckInDate, newCheckOutDate);
-  }
-
   public isActive(): boolean {
     return !this._status.isCancelled();
   }

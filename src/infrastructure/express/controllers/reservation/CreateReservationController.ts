@@ -7,14 +7,13 @@ export class CreateReservationController {
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const { customerId, roomIds, checkInDate, checkOutDate, totalPrice, currency } = req.body;
+      const { customerId, roomIds, checkInDate, checkOutDate, currency } = req.body;
 
       const command: CreateReservationCommand = {
         customerId,
         roomIds,
         checkInDate: new Date(checkInDate),
         checkOutDate: new Date(checkOutDate),
-        totalPrice,
         currency: currency || 'EUR',
       };
 

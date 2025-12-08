@@ -8,20 +8,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:domain": "jest src/domain",
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "ts-node -r tsconfig-paths/register src/server.ts",
-    "cli": "ts-node -r tsconfig-paths/register src/infrastructure/cli/index.ts",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:migrate:reset": "prisma migrate reset",
-    "db:studio": "prisma studio",
-    "db:seed": "ts-node prisma/seed.ts",
-    "db:check": "ts-node src/scripts/check-database.ts"
+    "cli": "ts-node -r tsconfig-paths/register src/infrastructure/cli/index.ts"
   },
   "_moduleAliases": {
     "@core": "./src/core",

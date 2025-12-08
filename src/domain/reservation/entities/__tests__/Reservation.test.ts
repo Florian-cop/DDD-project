@@ -201,122 +201,11 @@ describe('Reservation Entity', () => {
     });
   });
 
-  describe('room management', () => {
-    it('should add room to reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(2),
-        100
-      );
 
-      reservation.addRoom('room-2');
 
-      expect(reservation.roomIds.ids).toContain('room-1');
-      expect(reservation.roomIds.ids).toContain('room-2');
-    });
 
-    it('should remove room from reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1', 'room-2'],
-        createFutureDate(1),
-        createFutureDate(2),
-        200
-      );
 
-      reservation.removeRoom('room-2');
 
-      expect(reservation.roomIds.ids).toContain('room-1');
-      expect(reservation.roomIds.ids).not.toContain('room-2');
-    });
-  });
-
-  describe('price management', () => {
-    it('should update total price', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(2),
-        100
-      );
-
-      const newPrice = TotalPrice.create(150, 'EUR');
-      reservation.updateTotalPrice(newPrice);
-
-      expect(reservation.totalPrice.amount).toBe(150);
-    });
-
-    it('should throw error when updating price of cancelled reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(2),
-        100
-      );
-
-      reservation.cancel();
-
-      const newPrice = TotalPrice.create(150, 'EUR');
-
-      expect(() => reservation.updateTotalPrice(newPrice))
-        .toThrow('Cannot update price of cancelled reservation');
-    });
-  });
-
-  describe('date management', () => {
-    it('should change dates of booked reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(3),
-        100
-      );
-
-      const newCheckIn = createFutureDate(5);
-      const newCheckOut = createFutureDate(8);
-
-      reservation.changeDates(newCheckIn, newCheckOut);
-
-      expect(reservation.checkInDate).toEqual(newCheckIn);
-      expect(reservation.checkOutDate).toEqual(newCheckOut);
-      expect(reservation.numberOfNights).toBe(3);
-    });
-
-    it('should throw error when changing dates of cancelled reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(2),
-        100
-      );
-
-      reservation.cancel();
-
-      expect(() => reservation.changeDates(createFutureDate(5), createFutureDate(6)))
-        .toThrow('Cannot change dates of cancelled reservation');
-    });
-
-    it('should throw error when changing dates of confirmed reservation', () => {
-      const reservation = Reservation.create(
-        'customer-123',
-        ['room-1'],
-        createFutureDate(1),
-        createFutureDate(2),
-        100
-      );
-
-      reservation.confirm();
-
-      expect(() => reservation.changeDates(createFutureDate(5), createFutureDate(6)))
-        .toThrow('Cannot change dates of confirmed reservation');
-    });
-  });
 
   describe('active status checks', () => {
     it('isActive should return true for booked reservation', () => {
@@ -524,14 +413,6 @@ describe('Reservation Entity', () => {
       );
 
       reservation.cancel();
-
-      // Cannot change dates
-      expect(() => reservation.changeDates(createFutureDate(5), createFutureDate(6)))
-        .toThrow();
-
-      // Cannot update price
-      const newPrice = TotalPrice.create(150, 'EUR');
-      expect(() => reservation.updateTotalPrice(newPrice)).toThrow();
     });
   });
 });
