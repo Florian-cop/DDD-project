@@ -1,21 +1,16 @@
 import { IReservationRepository, Reservation } from '@domain/reservation';
 import { IWalletRepository } from '@domain/wallet';
-import { PaymentService } from '@domain/payment';
 import { CreateReservationCommand } from './CreateReservationCommand';
 import { PrismaClient } from '@prisma/client';
 import { ReservationRepository } from '@infrastructure/db/repositories/ReservationRepository';
 import { WalletRepository } from '@infrastructure/db/repositories/WalletRepository';
 
 export class CreateReservationService {
-  private readonly paymentService: PaymentService;
-
   constructor(
     private readonly reservationRepository: IReservationRepository,
     private readonly walletRepository: IWalletRepository,
     private readonly prisma: PrismaClient
-  ) {
-    this.paymentService = new PaymentService();
-  }
+  ) {}
 
   async execute(command: CreateReservationCommand): Promise<Reservation> {
     const wallet = await this.walletRepository.findByCustomerId(command.customerId);
@@ -45,7 +40,7 @@ export class CreateReservationService {
       command.currency
     );
 
-    this.paymentService.processInitialReservationPayment(wallet, reservation);
+    wallet.deductInitialReservationPayment(reservation.totalPrice.amount);
 
     await this.prisma.$transaction(async (tx) => {
       const txReservationRepo = new ReservationRepository(tx as PrismaClient);

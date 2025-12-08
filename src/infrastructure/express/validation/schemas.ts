@@ -14,10 +14,12 @@ export const updateCustomerSchema = z.object({
   phoneNumber: z.string().regex(/^\+?[0-9\s\-()]+$/).optional(),
 });
 
-export const updateWalletSchema = z.object({
+export const addFundsToWalletSchema = z.object({
   amount: z.number().positive('Le montant doit être positif'),
   currency: z.enum(['EUR', 'USD', 'GBP', 'JPY', 'CHF']),
 });
+
+export const updateWalletSchema = addFundsToWalletSchema;
 
 export const createRoomSchema = z.object({
   roomNumber: z.string().min(1, 'Le numéro de chambre est requis'),
@@ -57,20 +59,6 @@ export const createReservationSchema = z.object({
     return nights <= 30;
   },
   { message: 'La durée maximale de réservation est de 30 nuits', path: ['checkOutDate'] }
-);
-
-export const updateReservationSchema = z.object({
-  checkInDate: z.string().datetime().optional(),
-  checkOutDate: z.string().datetime().optional(),
-  status: z.enum(['BOOKED', 'CONFIRMED', 'CANCELLED']).optional(),
-}).refine(
-  (data) => {
-    if (data.checkInDate && data.checkOutDate) {
-      return new Date(data.checkOutDate) > new Date(data.checkInDate);
-    }
-    return true;
-  },
-  { message: 'La date de check-out doit être après le check-in', path: ['checkOutDate'] }
 );
 
 export const confirmReservationSchema = z.object({
@@ -129,11 +117,11 @@ export const adminHistoryQuerySchema = z.object({
 
 export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
 export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>;
+export type AddFundsToWalletInput = z.infer<typeof addFundsToWalletSchema>;
 export type UpdateWalletInput = z.infer<typeof updateWalletSchema>;
 export type CreateRoomInput = z.infer<typeof createRoomSchema>;
 export type UpdateRoomInput = z.infer<typeof updateRoomSchema>;
 export type CreateReservationInput = z.infer<typeof createReservationSchema>;
-export type UpdateReservationInput = z.infer<typeof updateReservationSchema>;
 export type ConfirmReservationInput = z.infer<typeof confirmReservationSchema>;
 export type CancelReservationInput = z.infer<typeof cancelReservationSchema>;
 export type ReleaseRoomInput = z.infer<typeof releaseRoomSchema>;

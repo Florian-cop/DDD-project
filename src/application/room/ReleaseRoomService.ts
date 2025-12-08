@@ -20,24 +20,30 @@ export class ReleaseRoomService {
       throw new Error(`Room "${command.roomId}" is already available`);
     }
 
-    if (command.reservationId) {
-      const reservation = await this.reservationRepository.findOneById(command.reservationId);
+    if (!command.reservationId) {
+      throw new Error('Reservation ID is required to release a room');
+    }
 
-      if (!reservation) {
-        throw new Error(`Reservation with id "${command.reservationId}" not found`);
-      }
+    const reservation = await this.reservationRepository.findOneById(command.reservationId);
 
-      if (reservation.customerId !== command.customerId) {
-        throw new Error('Customer is not the owner of this reservation');
-      }
+    if (!reservation) {
+      throw new Error(`Reservation with id "${command.reservationId}" not found`);
+    }
 
-      if (!reservation.roomIds.hasRoom(command.roomId)) {
-        throw new Error('Room is not part of this reservation');
-      }
+    if (reservation.customerId !== command.customerId) {
+      throw new Error('Customer is not the owner of this reservation');
+    }
 
-      if (reservation.status.isCancelled()) {
-        throw new Error('Cannot release room from cancelled reservation');
-      }
+    if (!reservation.roomIds.hasRoom(command.roomId)) {
+      throw new Error('Room is not part of this reservation');
+    }
+
+    if (reservation.status.isCancelled()) {
+      throw new Error('Cannot release room from cancelled reservation');
+    }
+
+    if (!reservation.status.isConfirmed()) {
+      throw new Error('Can only release rooms from confirmed reservations');
     }
 
     room.makeAvailable();

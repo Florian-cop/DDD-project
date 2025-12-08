@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ReservationRepository } from '../../db/repositories/ReservationRepository';
 import { WalletRepository } from '../../db/repositories/WalletRepository';
+import { RoomRepository } from '../../db/repositories/RoomRepository';
 import { CreateReservationService } from '../../../application/reservation/CreateReservationService';
 import { ConfirmReservationService } from '../../../application/reservation/ConfirmReservationService';
 import { CancelReservationService } from '../../../application/reservation/CancelReservationService';
@@ -18,10 +19,11 @@ export const createReservationRouter = (): Router => {
   
   const reservationRepository = new ReservationRepository(prisma);
   const walletRepository = new WalletRepository(prisma);
+  const roomRepository = new RoomRepository(prisma);
   
   const createReservationService = new CreateReservationService(reservationRepository, walletRepository, prisma);
-  const confirmReservationService = new ConfirmReservationService(reservationRepository, walletRepository, prisma);
-  const cancelReservationService = new CancelReservationService(reservationRepository);
+  const confirmReservationService = new ConfirmReservationService(reservationRepository, walletRepository, roomRepository, prisma);
+  const cancelReservationService = new CancelReservationService(reservationRepository, roomRepository, prisma);
   
   const createReservationController = new CreateReservationController(createReservationService);
   const confirmReservationController = new ConfirmReservationController(confirmReservationService);

@@ -1,10 +1,9 @@
 import { Command } from 'commander';
-import { CreateWalletService } from '@application/wallet/CreateWalletService';
 import { GetWalletService } from '@application/wallet/GetWalletService';
-import { GetAllWalletsService } from '@application/wallet/ListWalletService';
-import { UpdateWalletService } from '@application/wallet/UpdateWalletService';
+import { GetAllWalletsService } from '@application/wallet/GetAllWalletsService';
+import { AddFundsToWalletService } from '@application/wallet/AddFundsToWalletService';
 import { GetWalletQuery } from '@application/wallet/GetWalletQuery';
-import { UpdateWalletCommand } from '@application/wallet/UpdateWalletCommand';
+import { AddFundsToWalletCommand } from '@application/wallet/AddFundsToWalletCommand';
 import { WalletRepository } from '@infrastructure/db/repositories/WalletRepository';
 import { CustomerRepository } from '@infrastructure/db/repositories/CustomerRepository';
 import { displaySuccess, displayError, displayTitle, displayWallet } from '../utils/display';
@@ -21,25 +20,6 @@ export function registerWalletCommands(program: Command) {
     .description('Gestion des portefeuilles');
 
   wallet
-    .command('create')
-    .description('Créer un portefeuille pour un client')
-    .requiredOption('-c, --customer-id <customerId>', 'ID du client')
-    .action(async (options) => {
-      try {
-        const service = new CreateWalletService(walletRepository);
-        const walletId = await service.execute(options.customerId);
-        
-        displayTitle('Portefeuille Créé');
-        displaySuccess('Portefeuille créé avec succès!');
-        console.log(chalk.bold('ID du portefeuille:'), chalk.green(walletId));
-        console.log(chalk.bold('Solde initial:'), chalk.yellow('0.00 EUR'));
-      } catch (error: any) {
-        displayError(`Impossible de créer le portefeuille: ${error.message}`);
-        process.exit(1);
-      }
-    });
-
-  wallet
     .command('add-funds')
     .description('Alimenter un portefeuille')
     .requiredOption('-c, --customer-id <customerId>', 'ID du client')
@@ -52,8 +32,8 @@ export function registerWalletCommands(program: Command) {
           throw new Error('Le montant doit être un nombre positif');
         }
 
-        const service = new UpdateWalletService(walletRepository, customerRepository);
-        const command = new UpdateWalletCommand(
+        const service = new AddFundsToWalletService(walletRepository, customerRepository);
+        const command = new AddFundsToWalletCommand(
           options.customerId,
           amount,
           options.currency.toUpperCase()

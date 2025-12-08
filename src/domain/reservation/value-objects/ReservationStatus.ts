@@ -1,76 +1,76 @@
 import { ValueObject } from '../../../core/ValueObject';
 
-export enum ReservationStatus {
+export enum ReservationStatusEnum {
   BOOKED = 'BOOKED',
   CONFIRMED = 'CONFIRMED',
   CANCELLED = 'CANCELLED'
 }
 
 interface IReservationStatusProps {
-  status: ReservationStatus;
+  status: ReservationStatusEnum;
 }
 
-export class ReservationStatusVO extends ValueObject<IReservationStatusProps> {
+export class ReservationStatus extends ValueObject<IReservationStatusProps> {
   private constructor(props: IReservationStatusProps) {
     super(props);
   }
 
-  get status(): ReservationStatus {
+  get status(): ReservationStatusEnum {
     return this.props.status;
   }
 
-  get value(): ReservationStatus {
+  get value(): ReservationStatusEnum {
     return this.props.status;
   }
 
   get label(): string {
     switch (this.props.status) {
-      case ReservationStatus.BOOKED:
+      case ReservationStatusEnum.BOOKED:
         return 'Booked';
-      case ReservationStatus.CONFIRMED:
+      case ReservationStatusEnum.CONFIRMED:
         return 'Confirmed';
-      case ReservationStatus.CANCELLED:
+      case ReservationStatusEnum.CANCELLED:
         return 'Cancelled';
     }
   }
 
   public isBooked(): boolean {
-    return this.props.status === ReservationStatus.BOOKED;
+    return this.props.status === ReservationStatusEnum.BOOKED;
   }
 
   public isConfirmed(): boolean {
-    return this.props.status === ReservationStatus.CONFIRMED;
+    return this.props.status === ReservationStatusEnum.CONFIRMED;
   }
 
   public isCancelled(): boolean {
-    return this.props.status === ReservationStatus.CANCELLED;
+    return this.props.status === ReservationStatusEnum.CANCELLED;
   }
 
   public canBeConfirmed(): boolean {
-    return this.props.status === ReservationStatus.BOOKED;
+    return this.props.status === ReservationStatusEnum.BOOKED;
   }
 
   public canBeCancelled(): boolean {
-    return this.props.status === ReservationStatus.BOOKED || 
-           this.props.status === ReservationStatus.CONFIRMED;
+    return this.props.status === ReservationStatusEnum.BOOKED || 
+           this.props.status === ReservationStatusEnum.CONFIRMED;
   }
 
-  public static create(status: ReservationStatus): ReservationStatusVO {
-    if (!Object.values(ReservationStatus).includes(status)) {
+  public static create(status: ReservationStatusEnum): ReservationStatus {
+    if (!Object.values(ReservationStatusEnum).includes(status)) {
       throw new Error(`Invalid reservation status: ${status}`);
     }
-    return new ReservationStatusVO({ status });
+    return new ReservationStatus({ status });
   }
 
-  public static createBooked(): ReservationStatusVO {
-    return new ReservationStatusVO({ status: ReservationStatus.BOOKED });
+  public static createBooked(): ReservationStatus {
+    return new ReservationStatus({ status: ReservationStatusEnum.BOOKED });
   }
 
-  public static createConfirmed(): ReservationStatusVO {
-    return new ReservationStatusVO({ status: ReservationStatus.CONFIRMED });
+  public static createConfirmed(): ReservationStatus {
+    return new ReservationStatus({ status: ReservationStatusEnum.CONFIRMED });
   }
 
-  public static createCancelled(): ReservationStatusVO {
-    return new ReservationStatusVO({ status: ReservationStatus.CANCELLED });
+  public static createCancelled(): ReservationStatus {
+    return new ReservationStatus({ status: ReservationStatusEnum.CANCELLED });
   }
 }

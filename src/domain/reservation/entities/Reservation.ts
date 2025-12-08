@@ -2,7 +2,7 @@ import { Entity } from '../../../core/Entity';
 import { DateRange } from '../value-objects/DateRange';
 import { RoomIds } from '../value-objects/RoomIds';
 import { TotalPrice } from '../value-objects/TotalPrice';
-import { ReservationStatusVO, ReservationStatus } from '../value-objects/ReservationStatus';
+import { ReservationStatus } from '../value-objects/ReservationStatus';
 
 export interface IReservationProps {
   customerId: string;
@@ -10,7 +10,7 @@ export interface IReservationProps {
   dateRange: DateRange;
   totalPrice: TotalPrice;
   reservationDate: Date;
-  status: ReservationStatusVO;
+  status: ReservationStatus;
 }
 
 export class Reservation extends Entity<IReservationProps> {
@@ -19,7 +19,7 @@ export class Reservation extends Entity<IReservationProps> {
   private _dateRange: DateRange;
   private _totalPrice: TotalPrice;
   private _reservationDate: Date;
-  private _status: ReservationStatusVO;
+  private _status: ReservationStatus;
 
   private constructor(props: IReservationProps, id?: string) {
     super(id);
@@ -63,7 +63,7 @@ export class Reservation extends Entity<IReservationProps> {
     return this._reservationDate;
   }
 
-  get status(): ReservationStatusVO {
+  get status(): ReservationStatus {
     return this._status;
   }
 
@@ -71,14 +71,14 @@ export class Reservation extends Entity<IReservationProps> {
     if (!this._status.canBeConfirmed()) {
       throw new Error('Reservation cannot be confirmed in current status');
     }
-    this._status = ReservationStatusVO.createConfirmed();
+    this._status = ReservationStatus.createConfirmed();
   }
 
   public cancel(): void {
     if (!this._status.canBeCancelled()) {
       throw new Error('Reservation cannot be cancelled in current status');
     }
-    this._status = ReservationStatusVO.createCancelled();
+    this._status = ReservationStatus.createCancelled();
   }
 
   public addRoom(roomId: string): void {
@@ -140,7 +140,7 @@ export class Reservation extends Entity<IReservationProps> {
     const roomIdsVO = RoomIds.create(roomIds);
     const dateRangeVO = DateRange.create(checkInDate, checkOutDate);
     const totalPriceVO = TotalPrice.create(totalPrice, currency);
-    const statusVO = ReservationStatusVO.createBooked();
+    const statusVO = ReservationStatus.createBooked();
 
     return new Reservation(
       {

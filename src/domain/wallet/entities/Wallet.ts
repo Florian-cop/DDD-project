@@ -61,6 +61,32 @@ export class Wallet extends Entity<IWalletProps> {
     return Money.create(this._balanceInEuros, Currency.EUR);
   }
 
+  public deductInitialReservationPayment(totalPrice: number): void {
+    const halfAmount = totalPrice / 2;
+    const paymentAmount = Money.create(halfAmount, Currency.EUR);
+
+    if (!this.hasSufficientFunds(paymentAmount)) {
+      throw new Error(
+        `Insufficient funds. Required: ${paymentAmount.format()}, Available: ${this._balanceInEuros.toFixed(2)} EUR`
+      );
+    }
+
+    this.deduct(paymentAmount);
+  }
+
+  public deductConfirmationPayment(totalPrice: number): void {
+    const halfAmount = totalPrice / 2;
+    const paymentAmount = Money.create(halfAmount, Currency.EUR);
+
+    if (!this.hasSufficientFunds(paymentAmount)) {
+      throw new Error(
+        `Insufficient funds for confirmation. Required: ${paymentAmount.format()}, Available: ${this._balanceInEuros.toFixed(2)} EUR`
+      );
+    }
+
+    this.deduct(paymentAmount);
+  }
+
   public static create(
     idCustomer: string,
     id?: string

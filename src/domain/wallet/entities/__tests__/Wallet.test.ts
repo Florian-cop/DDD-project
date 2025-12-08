@@ -289,4 +289,65 @@ describe('Wallet Entity', () => {
       expect(wallet.balanceInEuros).toBe(100);
     });
   });
+
+  describe('deductInitialReservationPayment', () => {
+    it('should deduct half of total price for initial reservation', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(200, Currency.EUR));
+
+      wallet.deductInitialReservationPayment(100);
+
+      expect(wallet.balanceInEuros).toBe(150);
+    });
+
+    it('should throw error when insufficient funds for initial payment', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(40, Currency.EUR));
+
+      expect(() => wallet.deductInitialReservationPayment(100))
+        .toThrow('Insufficient funds');
+    });
+
+    it('should deduct exact half amount', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(300, Currency.EUR));
+
+      wallet.deductInitialReservationPayment(200);
+
+      expect(wallet.balanceInEuros).toBe(200);
+    });
+  });
+
+  describe('deductConfirmationPayment', () => {
+    it('should deduct remaining half for confirmation', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(200, Currency.EUR));
+      wallet.deductInitialReservationPayment(100);
+
+      wallet.deductConfirmationPayment(100);
+
+      expect(wallet.balanceInEuros).toBe(100);
+    });
+
+    it('should throw error when insufficient funds for confirmation', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(60, Currency.EUR));
+      wallet.deductInitialReservationPayment(100);
+
+      expect(() => wallet.deductConfirmationPayment(100))
+        .toThrow('Insufficient funds for confirmation');
+    });
+
+    it('should handle complete reservation payment workflow', () => {
+      const wallet = Wallet.create('customer-123');
+      wallet.addFunds(Money.create(500, Currency.EUR));
+
+      const totalPrice = 300;
+      wallet.deductInitialReservationPayment(totalPrice);
+      expect(wallet.balanceInEuros).toBe(350);
+
+      wallet.deductConfirmationPayment(totalPrice);
+      expect(wallet.balanceInEuros).toBe(200);
+    });
+  });
 });

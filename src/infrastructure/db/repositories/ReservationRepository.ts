@@ -1,11 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import { IReservationRepository } from '@domain/reservation/repositories/IReservationRepository';
 import { Reservation } from '@domain/reservation/entities/Reservation';
-import { ReservationStatus } from '@domain/reservation/value-objects/ReservationStatus';
+import { ReservationStatus, ReservationStatusEnum } from '@domain/reservation/value-objects/ReservationStatus';
 import { DateRange } from '@domain/reservation/value-objects/DateRange';
 import { RoomIds } from '@domain/reservation/value-objects/RoomIds';
 import { TotalPrice } from '@domain/reservation/value-objects/TotalPrice';
-import { ReservationStatusVO } from '@domain/reservation/value-objects/ReservationStatus';
 
 type PrismaReservation = {
   id: string;
@@ -322,26 +321,26 @@ export class ReservationRepository implements IReservationRepository {
     );
   }
 
-  private mapStatusFromDb(dbStatus: string): ReservationStatusVO {
+  private mapStatusFromDb(dbStatus: string): ReservationStatus {
     switch (dbStatus) {
       case 'BOOKED':
-        return ReservationStatusVO.createBooked();
+        return ReservationStatus.createBooked();
       case 'CONFIRMED':
-        return ReservationStatusVO.createConfirmed();
+        return ReservationStatus.createConfirmed();
       case 'CANCELLED':
-        return ReservationStatusVO.createCancelled();
+        return ReservationStatus.createCancelled();
       default:
-        return ReservationStatusVO.createBooked();
+        return ReservationStatus.createBooked();
     }
   }
 
   private mapStatusToDb(status: ReservationStatus): string {
-    switch (status) {
-      case ReservationStatus.BOOKED:
+    switch (status.value) {
+      case ReservationStatusEnum.BOOKED:
         return 'BOOKED';
-      case ReservationStatus.CONFIRMED:
+      case ReservationStatusEnum.CONFIRMED:
         return 'CONFIRMED';
-      case ReservationStatus.CANCELLED:
+      case ReservationStatusEnum.CANCELLED:
         return 'CANCELLED';
       default:
         return 'BOOKED';

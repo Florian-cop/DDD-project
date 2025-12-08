@@ -1,14 +1,14 @@
 import { Wallet, IWalletRepository, Money, Currency } from '@domain/wallet';
 import { ICustomerRepository } from '@domain/customer/repositories/ICustomerRepository';
-import { UpdateWalletCommand } from './UpdateWalletCommand';
+import { AddFundsToWalletCommand } from './AddFundsToWalletCommand';
 
-export class UpdateWalletService {
+export class AddFundsToWalletService {
   constructor(
     private readonly walletRepository: IWalletRepository,
     private readonly customerRepository: ICustomerRepository
   ) {}
 
-  async execute(command: UpdateWalletCommand): Promise<Wallet> {
+  async execute(command: AddFundsToWalletCommand): Promise<Wallet> {
     const customer = await this.customerRepository.findOneById(command.customerId);
     
     if (!customer) {

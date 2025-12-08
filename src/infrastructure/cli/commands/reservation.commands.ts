@@ -84,6 +84,7 @@ export function registerReservationCommands(program: Command) {
         const service = new ConfirmReservationService(
           reservationRepository,
           walletRepository,
+          roomRepository,
           prisma
         );
         
@@ -107,7 +108,7 @@ export function registerReservationCommands(program: Command) {
     .requiredOption('-i, --id <id>', 'ID de la réservation')
     .action(async (options) => {
       try {
-        const service = new CancelReservationService(reservationRepository);
+        const service = new CancelReservationService(reservationRepository, roomRepository, prisma);
         const command = new CancelReservationCommand(options.id);
         await service.execute(command);
         
